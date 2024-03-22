@@ -3,11 +3,13 @@
   become: true
 
   tasks:
+  ## Initial setup
     - name: Update packages
       package:
         name: '*'
         state: latest
 
+  ## Install Oh My Zsh
     - name: Install dependencies for Oh My Zsh
       become: true
       package:
@@ -36,6 +38,7 @@
         name: "{{ ansible_user }}"
         shell: /usr/bin/zsh
 
+  ## Install Zsh plugins (Zoxide)
     - name: Install Zoxide for Zsh
       become_user: "{{ ansible_user }}"
       command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
@@ -45,10 +48,26 @@
       lineinfile:
         path: ~/.zshrc
         line: 'export PATH="$HOME/.local/bin:$PATH"'
+        state: present
 
     - name: Add Zoxide to .zshrc
       become_user: "{{ ansible_user }}"
       lineinfile:
         path: ~/.zshrc
         line: 'eval "$(zoxide init zsh)"'
+        state: present
 
+    ## Add aliases to .zshrc
+    - name: Add docker aliases to .zshrc
+      become_user: "{{ ansible_user }}"
+      lineinfile:
+        path: ~/.zshrc
+        line: 'alias d="docker"'
+        state: present
+
+    - name: Add docker compose aliases to .zshrc
+      become_user: "{{ ansible_user }}"
+      lineinfile:
+        path: ~/.zshrc
+        line: 'alias dc="docker compose"'
+        state: present
