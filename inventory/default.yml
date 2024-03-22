@@ -1,20 +1,20 @@
 servers:
   hosts:
     lab-vps-01:
-      ansible_host: 192.168.2.33
+      ansible_host: 100.123.120.33
       ansible_user: jordy
     lab-vps-02:
-      ansible_host: 192.168.2.3
+      ansible_host: 100.114.244.139
       ansible_user: jordy
     lab-vps-03:
-      ansible_host: 192.168.2.143
+      ansible_host: 100.98.101.15
       ansible_user: jordy
 
 hypervisors:
   hosts:
     lab-pve-01:
-      ansible_host: 192.168.2.88
+      ansible_host: 100.72.155.135
       ansible_user: root
     lab-pve-02:
-      ansible_host: 192.168.2.89
+      ansible_host: 100.96.34.25
       ansible_user: root
