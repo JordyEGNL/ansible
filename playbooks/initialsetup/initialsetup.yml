@@ -1,5 +1,5 @@
-- name: Update servers
-  hosts: servers
+- name: Initial setup for servers
+  hosts: testing
   become: true
 
   tasks:
@@ -9,7 +9,7 @@
         name: 'zsh'
         state: present
 
-    - name: Check if Oh My Zsh is installed
+    - name: Check if Oh My Zsh is installed (1/2)
       stat:
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
@@ -18,3 +18,15 @@
       become_user: "{{ ansible_user }}"
       command: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
       when: ohmyzsh_installed.stat.exists == False
+
+    - name: Check if Oh My Zsh is installed (2/2)
+      stat:
+        path: ~/.oh-my-zsh
+      when: ohmyzsh_installed.stat.exists == False
+      register: ohmyzsh_installed
+
+    - name: Set Zsh as default shell for user
+      become_user: root
+      user:
+        name: "{{ ansible_user }}"
+        shell: /usr/bin/zsh
