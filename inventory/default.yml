@@ -1,0 +1,21 @@
+all:
+  servers:
+    hosts:
+      lab-vps-01:
+        ansible_host: lab-vps-01
+        ansible_user: jordy
+      lab-vps-02:
+        ansible_host: lab-vps-02
+        ansible_user: jordy
+      lab-vps-03:
+        ansible_host: lab-vps-03
+        ansible_user: jordy
+
+  hypervisors:
+    hosts:
+      lab-pve-01:
+        ansible_host: lab-pve-01
+        ansible_user: root
+      lab-pve-02:
+        ansible_host: lab-pve-02
+        ansible_user: root
