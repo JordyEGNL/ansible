@@ -1,0 +1,20 @@
+- name: Update servers
+  hosts: servers
+  become: true
+
+  tasks:
+    - name: Install dependencies for Oh My Zsh
+      become: true
+      package:
+        name: 'zsh'
+        state: present
+
+    - name: Check if Oh My Zsh is installed
+      stat:
+        path: ~/.oh-my-zsh
+      register: ohmyzsh_installed
+
+    - name: Install Oh My Zsh
+      become_user: "{{ ansible_user }}"
+      command: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      when: ohmyzsh_installed.stat.exists == False
