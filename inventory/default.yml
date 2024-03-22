@@ -10,6 +10,13 @@ servers:
       ansible_host: 100.98.101.15
       ansible_user: jordy
 
+demo:
+  hosts:
+    demo-vps-01:
+      ansible_host: 
+      ansible_user: jordy
+
+
 hypervisors:
   hosts:
     lab-pve-01:

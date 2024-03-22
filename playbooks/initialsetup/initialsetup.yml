@@ -3,6 +3,11 @@
   become: true
 
   tasks:
+    - name: Update packages
+      package:
+        name: '*'
+        state: latest
+
     - name: Install dependencies for Oh My Zsh
       become: true
       package:
@@ -30,3 +35,20 @@
       user:
         name: "{{ ansible_user }}"
         shell: /usr/bin/zsh
+
+    - name: Install Zoxide for Zsh
+      become_user: "{{ ansible_user }}"
+      command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
+
+    - name: Add ~/.local/bin to PATH
+      become_user: "{{ ansible_user }}"
+      lineinfile:
+        path: ~/.zshrc
+        line: 'export PATH="$HOME/.local/bin:$PATH"'
+
+    - name: Add Zoxide to .zshrc
+      become_user: "{{ ansible_user }}"
+      lineinfile:
+        path: ~/.zshrc
+        line: 'eval "$(zoxide init zsh)"'
+
