@@ -32,6 +32,13 @@
       when: ohmyzsh_installed.stat.exists == False
       register: ohmyzsh_installed
 
+    - name: Set ZSH_THEME in .zshrc
+      lineinfile:
+        path: ~/.zshrc
+        regexp: '^ZSH_THEME='
+        line: 'ZSH_THEME="agnoster"'
+        state: present
+
     - name: Set Zsh as default shell for user
       become_user: root
       user:
@@ -39,6 +46,12 @@
         shell: /usr/bin/zsh
 
   ## Install Zsh plugins (Zoxide)
+    - name: Install dependencies for Zoxide
+      become: true
+      package:
+        name: 'fzf'
+        state: present
+
     - name: Install Zoxide for Zsh
       become_user: "{{ ansible_user }}"
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
