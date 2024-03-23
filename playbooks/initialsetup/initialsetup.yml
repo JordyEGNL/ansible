@@ -34,9 +34,14 @@
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
 
+    - name: Debug ohmyzsh_installed variable
+      debug:
+        var: ohmyzsh_installed
+
+
     - name: Set ZSH_THEME in .zshrc
       become_user: "{{ ansible_user }}"
-      when: ohmyzsh_installed.stat.exists == True
+      when: ohmyzsh_installed.stat.exists
       lineinfile:
         path: ~/.zshrc
         regexp: '^ZSH_THEME='
@@ -45,7 +50,7 @@
 
     - name: Set Zsh as default shell for user
       become: true
-      when: ohmyzsh_installed.stat.exists == True
+      when: ohmyzsh_installed.stat.exists
       command: usermod --shell /bin/zsh "{{ ansible_user }}"
       changed_when: false
 
@@ -76,7 +81,7 @@
 
     - name: Add ~/.local/bin to PATH
       become_user: "{{ ansible_user }}"
-      when: zoxide_check.stat.exists == True
+      when: zoxide_check.stat.exists
       lineinfile:
         path: ~/.zshrc
         line: 'export PATH="$HOME/.local/bin:$PATH"'
@@ -84,7 +89,7 @@
 
     - name: Add Zoxide to .zshrc
       become_user: "{{ ansible_user }}"
-      when: zoxide_check.stat.exists == True
+      when: zoxide_check.stat.exists
       lineinfile:
         path: ~/.zshrc
         line: 'eval "$(zoxide init zsh)"'
