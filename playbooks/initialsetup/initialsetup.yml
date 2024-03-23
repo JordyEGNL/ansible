@@ -43,10 +43,9 @@
         state: present
 
     - name: Set Zsh as default shell for user
-      become_user: root
-      user:
-        name: "{{ ansible_user }}"
-        shell: /usr/bin/zsh
+      become: true
+      command: usermod --shell /bin/zsh "{{ ansible_user }}"
+      changed_when: false
 
   ## Install Zsh plugins (Zoxide)
     - name: APT - Install dependencies for Zoxide
