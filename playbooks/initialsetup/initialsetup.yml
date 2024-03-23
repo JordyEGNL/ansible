@@ -28,12 +28,12 @@
 
     - name: SHELL - Install Oh My Zsh
       become_user: "{{ ansible_user }}"
-      when: ohmyzsh_installed.stat.exists == False
+      when: ohmyzsh_installed.exists != True
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
     - name: Check if Oh My Zsh is installed (2/2)
       become_user: "{{ ansible_user }}"
-      when: ohmyzsh_installed.stat.exists == False
+      when: ohmyzsh_installed.stat.exists != True
       stat:
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
