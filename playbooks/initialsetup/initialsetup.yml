@@ -132,6 +132,12 @@
         state: latest
         update_cache: true
 
+    - Name: Create docker directory
+      become_user: "{{ ansible_user }}"
+      file:
+        path: ~/docker
+        state: directory
+
     - name: Add ansible_user to docker group
       become: true
       user:
