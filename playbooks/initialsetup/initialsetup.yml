@@ -56,7 +56,7 @@
         state: present
 
     ## TODO: Add check if Zoxide is already installed
-    - name: Install Zoxide for Zsh
+    - name: SHELL - Install Zoxide for Zsh
       become_user: "{{ ansible_user }}"
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
 
@@ -89,7 +89,7 @@
         line: 'alias dc="docker compose"'
         state: present
 
-    - name: Install required system packages for Docker
+    - name: APT - Install dependencies for Docker
       become: true
       apt:
         pkg:
@@ -115,7 +115,7 @@
         repo: deb https://download.docker.com/linux/ubuntu jammy stable
         state: present
 
-    - name: Update apt and install docker-ce
+    - name: APT - Install docker-ce
       become: true
       apt:
         name:
@@ -127,8 +127,15 @@
         state: latest
         update_cache: true
 
+    - name: Add ansible_user to docker group
+      become: true
+      user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: yes
+
     ## Set default motd
-    - name: Install dependencies for motd
+    - name: APT - Install dependencies for motd
       become: true
       package:
         name: 
