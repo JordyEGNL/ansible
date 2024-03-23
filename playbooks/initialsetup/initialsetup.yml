@@ -22,9 +22,9 @@
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
 
-    - name: Debug ohmyzsh_installed variable
-      debug:
-        var: ohmyzsh_installed
+    #- name: Debug ohmyzsh_installed variable
+    #  debug:
+    #    var: ohmyzsh_installed
 
     - name: SHELL - Install Oh My Zsh
       become_user: "{{ ansible_user }}"
@@ -36,10 +36,6 @@
       stat:
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
-
-    - name: Debug ohmyzsh_installed variable
-      debug:
-        var: ohmyzsh_installed
 
     - name: Set ZSH_THEME in .zshrc
       become_user: "{{ ansible_user }}"
