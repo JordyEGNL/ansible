@@ -87,3 +87,28 @@
         path: ~/.zshrc
         line: 'alias dc="docker compose"'
         state: present
+
+    ## Set default motd
+    - name: Install dependencies for motd
+      become: true
+      package:
+        name: 
+          - figlet
+          - lolcat
+        state: present
+
+    - name: Ensure motd directory is empty
+      become: true
+      file:
+        path: /etc/update-motd.d/
+        state: absent
+
+    - name: Set default motd
+      become: true
+      copy:
+        remote_src: true
+        src: motdfiles/
+        dest: /etc/update-motd.d/
+        owner: root
+        group: root
+        mode: '0644'
