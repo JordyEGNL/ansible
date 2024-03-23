@@ -1,10 +1,10 @@
 - name: Initial setup for servers
   hosts: demo
-  become: true
 
   tasks:
   ## Initial setup
     - name: Update packages
+      become: true
       package:
         name: '*'
         state: latest
@@ -17,6 +17,7 @@
         state: present
 
     - name: Check if Oh My Zsh is installed (1/2)
+      become_user: "{{ ansible_user }}"
       stat:
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
@@ -27,12 +28,14 @@
       when: ohmyzsh_installed.stat.exists == False
 
     - name: Check if Oh My Zsh is installed (2/2)
+      become_user: "{{ ansible_user }}"
       stat:
         path: ~/.oh-my-zsh
       when: ohmyzsh_installed.stat.exists == False
       register: ohmyzsh_installed
 
     - name: Set ZSH_THEME in .zshrc
+      become_user: "{{ ansible_user }}"
       lineinfile:
         path: ~/.zshrc
         regexp: '^ZSH_THEME='
