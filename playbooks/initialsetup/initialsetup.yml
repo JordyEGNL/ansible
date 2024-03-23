@@ -67,8 +67,9 @@
       when: zoxide_check.stat.exists == False
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
 
-    - name: Check if Zoxide is installed (1/2)
+    - name: Check if Zoxide is installed (2/2)
       become_user: "{{ ansible_user }}"
+      when: zoxide_check.stat.exists == False
       stat:
         path: ~/.local/bin/zoxide
       register: zoxide_check
