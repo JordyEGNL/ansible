@@ -55,10 +55,16 @@
         name: 'fzf'
         state: present
 
-    ## TODO: Add check if Zoxide is already installed
+    - name: Check if Zoxide is installed
+      become_user: "{{ ansible_user }}"
+      command: zoxide --version
+      register: zoxide_check
+      ignore_errors: yes
+
     - name: SHELL - Install Zoxide for Zsh
       become_user: "{{ ansible_user }}"
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
+      when: zoxide_check.rc != 0
 
     - name: Add ~/.local/bin to PATH
       become_user: "{{ ansible_user }}"
