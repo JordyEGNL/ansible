@@ -3,14 +3,14 @@
 
   tasks:
   ## Initial setup
-    - name: Update packages
+    - name: APT - Update packages
       become: true
       package:
         name: '*'
         state: latest
 
   ## Install Oh My Zsh
-    - name: Install Zsh
+    - name: APT - Install Zsh
       become: true
       package:
         name: 'zsh'
@@ -22,7 +22,7 @@
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
 
-    - name: Install Oh My Zsh
+    - name: SHELL - Install Oh My Zsh
       become_user: "{{ ansible_user }}"
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
       when: ohmyzsh_installed.stat.exists == False
