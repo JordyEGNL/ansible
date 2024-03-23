@@ -24,18 +24,19 @@
 
     - name: SHELL - Install Oh My Zsh
       become_user: "{{ ansible_user }}"
-      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
       when: ohmyzsh_installed.stat.exists == False
+      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
     - name: Check if Oh My Zsh is installed (2/2)
       become_user: "{{ ansible_user }}"
+      when: ohmyzsh_installed.stat.exists == False
       stat:
         path: ~/.oh-my-zsh
-      when: ohmyzsh_installed.stat.exists == False
       register: ohmyzsh_installed
 
     - name: Set ZSH_THEME in .zshrc
       become_user: "{{ ansible_user }}"
+      when: ohmyzsh_installed.stat.exists == True
       lineinfile:
         path: ~/.zshrc
         regexp: '^ZSH_THEME='
@@ -44,6 +45,7 @@
 
     - name: Set Zsh as default shell for user
       become: true
+      when: ohmyzsh_installed.stat.exists == True
       command: usermod --shell /bin/zsh "{{ ansible_user }}"
       changed_when: false
 
