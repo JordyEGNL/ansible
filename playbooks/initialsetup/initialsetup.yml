@@ -76,7 +76,6 @@
 
     - name: Check if Zoxide is installed (2/2)
       become_user: "{{ ansible_user }}"
-      when: zoxide_check.stat.exists == False
       stat:
         path: ~/.local/bin/zoxide
       register: zoxide_check
