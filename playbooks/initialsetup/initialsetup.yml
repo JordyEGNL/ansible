@@ -10,7 +10,7 @@
         state: latest
 
   ## Install Oh My Zsh
-    - name: Install dependencies for Oh My Zsh
+    - name: Install Zsh
       become: true
       package:
         name: 'zsh'
@@ -23,7 +23,7 @@
 
     - name: Install Oh My Zsh
       become_user: "{{ ansible_user }}"
-      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+      shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
       when: ohmyzsh_installed.stat.exists == False
 
     - name: Check if Oh My Zsh is installed (2/2)
