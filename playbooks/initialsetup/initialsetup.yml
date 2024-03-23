@@ -57,7 +57,7 @@
 
     - name: Check if Zoxide is installed
       become_user: "{{ ansible_user }}"
-      command: zoxide --version
+      command: ~/.local/bin/zoxide --version
       register: zoxide_check
       ignore_errors: yes
 
