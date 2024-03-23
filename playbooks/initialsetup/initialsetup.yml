@@ -55,6 +55,7 @@
         name: 'fzf'
         state: present
 
+    ## TODO: Add check if Zoxide is already installed
     - name: Install Zoxide for Zsh
       become_user: "{{ ansible_user }}"
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
@@ -103,10 +104,15 @@
         path: /etc/update-motd.d/
         state: absent
 
+    - name: Create motd directory
+      become: true
+      file:
+        path: /etc/update-motd.d/
+        state: directory
+
     - name: Set default motd
       become: true
       copy:
-        remote_src: true
         src: motdfiles/
         dest: /etc/update-motd.d/
         owner: root
