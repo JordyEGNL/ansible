@@ -1,5 +1,5 @@
 - name: Initial setup for servers
-  hosts: testing
+  hosts: demo
   become: true
 
   tasks:
