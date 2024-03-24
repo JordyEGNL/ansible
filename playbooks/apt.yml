@@ -1,4 +1,4 @@
-- name: Update packages on all servers
+- name: SERVERS - Update all packages
   hosts: servers, demo
   become: true
 

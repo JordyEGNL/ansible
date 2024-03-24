@@ -1,4 +1,4 @@
-- name: Ping servers
+- name: ALL - Ping
   hosts: all
   tasks:
     - name: Ping each server

@@ -1,5 +1,5 @@
-- name: Initial setup for servers
-  hosts: demo
+- name: SERVERS - Initial setup
+  hosts: servers
 
   tasks:
   ## Initial setup
