@@ -1,21 +1,3 @@
-servers:
-  hosts:
-    lab-vps-01:
-      ansible_host: 100.123.120.33
-      ansible_user: jordy
-    lab-vps-02:
-      ansible_host: 100.114.244.139
-      ansible_user: jordy
-    lab-vps-03:
-      ansible_host: 100.98.101.15
-      ansible_user: jordy
-
-demo:
-  hosts:
-    demo-vps-01:
-      ansible_host: 100.116.247.86
-      ansible_user: jordy
-
 
 hypervisors:
   hosts:
