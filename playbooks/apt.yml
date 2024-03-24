@@ -1,5 +1,5 @@
 - name: Update servers
-  hosts: servers
+  hosts: servers, demo
   become: true
 
   tasks:
