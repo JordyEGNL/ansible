@@ -3,7 +3,11 @@
   become: true
 
   tasks:
+    - name: Set DEBIAN_FRONTEND to noninteractive
+      shell: export DEBIAN_FRONTEND=noninteractive
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
     - name: Update packages
-      package:
-        name: '*'
-        state: latest
+      apt:
+        upgrade: true
