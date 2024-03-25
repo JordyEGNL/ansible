@@ -1,4 +1,4 @@
-servers:
+homeservers:
   hosts:
     lab-vps-01:
       ansible_host: 100.123.120.33
@@ -10,17 +10,30 @@ servers:
       ansible_host: 100.98.101.15
       ansible_user: jordy
 
+raspberry:
+  hosts:
+    lab-rpi-01:
+      ansible_host: 100.75.114.157
+      ansible_user: jordy
+
+oracleservers:
+  hosts:
+    orc-vps-01:
+      ansible_host: 100.102.124.47
+      ansible_user: jordy
+
+virtualservers:
+  children:
+    homeservers:
+    oracleservers:
+
 demo:
   hosts:
     demo-vps-01:
       ansible_host: 100.116.247.86
       ansible_user: jordy
 
-raspberry:
-  hosts:
-    lab-rpi-01:
-      ansible_host: 100.75.114.157
-      ansible_user: jordy
+
 
 
 hypervisors:

@@ -1,5 +1,5 @@
-- name: SERVERS - Initial setup
-  hosts: servers
+- name: VPS - Initial setup
+  hosts: virtualservers
 
   tasks:
   ## Initial setup
