@@ -147,7 +147,7 @@
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /etc/apt/keyrings/docker.asc
         mode: '0644'
-        when: ansible_distribution == 'Ubuntu'
+      when: ansible_distribution == 'Ubuntu'
 
     - name: DEBIAN - Download Docker GPG key
       become: true
@@ -155,7 +155,7 @@
         url: https://download.docker.com/linux/debian/gpg
         dest: /etc/apt/keyrings/docker.asc
         mode: '0644'
-        when: ansible_distribution == 'Debian'
+      when: ansible_distribution == 'Debian'
 
     - name: UBUNTU - Add Docker APT repository
       become: true
@@ -164,7 +164,7 @@
         state: present
         filename: docker
         update_cache: yes
-        when: ansible_distribution == 'Ubuntu'
+      when: ansible_distribution == 'Ubuntu'
 
     - name: DEBIAN - Add Docker APT repository
       become: true
@@ -173,7 +173,7 @@
         state: present
         filename: docker
         update_cache: yes
-        when: ansible_distribution == 'Debian'
+      when: ansible_distribution == 'Debian'
 
     - name: APT - Install docker-ce
       become: true
