@@ -16,12 +16,14 @@
   ## Install Oh My Zsh
     - name: APT - Install Zsh
       become: true
+      tags: [ 'shell' ]
       package:
         name: 'zsh'
         state: present
 
     - name: Check if Oh My Zsh is installed (1/2)
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       stat:
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
@@ -32,17 +34,20 @@
 
     - name: SHELL - Install Oh My Zsh
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       when: ohmyzsh_installed.stat.exists != True
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
     - name: Check if Oh My Zsh is installed (2/2)
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       stat:
         path: ~/.oh-my-zsh
       register: ohmyzsh_installed
 
     - name: Set ZSH_THEME in .zshrc
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       when: ohmyzsh_installed.stat.exists == True
       lineinfile:
         path: ~/.zshrc
@@ -52,6 +57,7 @@
 
     - name: Set Zsh as default shell for user
       become: true
+      tags: [ 'shell' ]
       when: ohmyzsh_installed.stat.exists == True
       command: usermod --shell /bin/zsh "{{ ansible_user }}"
       changed_when: false
@@ -59,29 +65,34 @@
   ## Install Zsh plugins (Zoxide)
     - name: APT - Install dependencies for Zoxide
       become: true
+      tags: [ 'shell' ]
       package:
         name: 'fzf'
         state: present
 
     - name: Check if Zoxide is installed (1/2)
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       stat:
         path: ~/.local/bin/zoxide
       register: zoxide_check
 
     - name: SHELL - Install Zoxide for Zsh
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       when: zoxide_check.stat.exists == False
       shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
 
     - name: Check if Zoxide is installed (2/2)
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       stat:
         path: ~/.local/bin/zoxide
       register: zoxide_check
 
     - name: Add ~/.local/bin to PATH
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       when: zoxide_check.stat.exists == True
       lineinfile:
         path: ~/.zshrc
@@ -90,6 +101,7 @@
 
     - name: Add Zoxide to .zshrc
       become_user: "{{ ansible_user }}"
+      tags: [ 'shell' ]
       when: zoxide_check.stat.exists == True
       lineinfile:
         path: ~/.zshrc
@@ -99,6 +111,7 @@
   ## Add aliases to .zshrc
     - name: Add docker alias to .zshrc
       become_user: "{{ ansible_user }}"
+      tags: [ 'docker' ]
       lineinfile:
         path: ~/.zshrc
         line: 'alias d="docker"'
@@ -106,6 +119,7 @@
 
     - name: Add docker compose alias to .zshrc
       become_user: "{{ ansible_user }}"
+      tags: [ 'docker' ]
       lineinfile:
         path: ~/.zshrc
         line: 'alias dc="docker compose"'
@@ -113,6 +127,7 @@
 
     - name: Add docker compose up alias to .zshrc
       become_user: "{{ ansible_user }}"
+      tags: [ 'docker' ]
       lineinfile:
         path: ~/.zshrc
         line: 'alias dcu="docker compose up -d"'
@@ -120,6 +135,7 @@
 
     - name: Add docker compose up with logs alias to .zshrc
       become_user: "{{ ansible_user }}"
+      tags: [ 'docker' ]
       lineinfile:
         path: ~/.zshrc
         line: 'alias dcul="docker compose up -d && docker compose logs -f"'
@@ -128,6 +144,7 @@
   ## Install Docker
     - name: APT - Install dependencies for Docker
       become: true
+      tags: [ 'docker' ]
       apt:
         pkg:
           - apt-transport-https
@@ -143,6 +160,7 @@
     # Remove old config file used in previous version of playbook
     - name: Remove Docker repository configuration file
       become: true
+      tags: [ 'docker' ]
       file:
         path: /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
         state: absent
@@ -150,6 +168,7 @@
 
     - name: Make sure /etc/apt/keyrings exists
       become: true
+      tags: [ 'docker' ]
       file:
         path: /etc/apt/keyrings
         state: directory
@@ -157,6 +176,7 @@
 
     - name: UBUNTU - Download Docker GPG key
       become: true
+      tags: [ 'docker' ]
       get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /etc/apt/keyrings/docker.asc
@@ -165,6 +185,7 @@
 
     - name: DEBIAN - Download Docker GPG key
       become: true
+      tags: [ 'docker' ]
       get_url:
         url: https://download.docker.com/linux/debian/gpg
         dest: /etc/apt/keyrings/docker.asc
@@ -173,6 +194,7 @@
 
     - name: UBUNTU - Add Docker APT repository
       become: true
+      tags: [ 'docker' ]
       apt_repository:
         repo: "deb [arch=arm64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
@@ -182,6 +204,7 @@
 
     - name: DEBIAN - Add Docker APT repository
       become: true
+      tags: [ 'docker' ]
       apt_repository:
         repo: "deb [arch=arm64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
         state: present
@@ -191,6 +214,7 @@
 
     - name: APT - Install docker-ce
       become: true
+      tags: [ 'docker' ]
       apt:
         name:
           - docker-ce
@@ -203,12 +227,14 @@
 
     - name: Create docker directory
       become_user: "{{ ansible_user }}"
+      tags: [ 'docker' ]
       file:
         path: ~/docker
         state: directory
 
     - name: Add ansible_user to docker group
       become: true
+      tags: [ 'docker' ]
       user:
         name: "{{ ansible_user }}"
         groups: docker
@@ -217,6 +243,7 @@
   ## Set default motd
     - name: APT - Install dependencies for motd
       become: true
+      tags: [ 'motd' ]
       package:
         name: 
           - figlet
@@ -225,18 +252,21 @@
 
     - name: Ensure motd directory is empty
       become: true
+      tags: [ 'motd' ]
       file:
         path: /etc/update-motd.d/
         state: absent
 
     - name: Create motd directory
       become: true
+      tags: [ 'motd' ]
       file:
         path: /etc/update-motd.d/
         state: directory
 
     - name: Set default motd
       become: true
+      tags: [ 'motd' ]
       copy:
         src: motdfiles/
         dest: /etc/update-motd.d/
