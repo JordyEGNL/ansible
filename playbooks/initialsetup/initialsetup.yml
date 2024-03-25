@@ -141,6 +141,7 @@
         state: present
 
     - name: Add Docker APT repository
+      become: true
       apt_repository:
         repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable"
         state: present
