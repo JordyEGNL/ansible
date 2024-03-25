@@ -3,11 +3,14 @@
 
   tasks:
   ## Initial setup
+    - name: APT - Set DEBIAN_FRONTEND to noninteractive
+      shell: export DEBIAN_FRONTEND=noninteractive
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
     - name: APT - Update packages
-      become: true
-      package:
-        name: '*'
-        state: latest
+      apt:
+        upgrade: true
 
   ## Install Oh My Zsh
     - name: APT - Install Zsh
@@ -92,7 +95,7 @@
         line: 'eval "$(zoxide init zsh)"'
         state: present
 
-    ## Add aliases to .zshrc
+  ## Add aliases to .zshrc
     - name: Add docker aliases to .zshrc
       become_user: "{{ ansible_user }}"
       lineinfile:
@@ -107,7 +110,7 @@
         line: 'alias dc="docker compose"'
         state: present
 
-    ## Install Docker
+  ## Install Docker
     - name: APT - Install dependencies for Docker
       become: true
       apt:
@@ -129,13 +132,13 @@
         state: absent
       ignore_errors: yes
 
-    - name: Add Docker GPG apt Key
+    - name: Add Docker GPG apt key
       become: true
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
 
-    - name: Add Docker Repository
+    - name: Add Docker repository
       become: true
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu jammy stable
@@ -166,7 +169,7 @@
         groups: docker
         append: yes
 
-    ## Set default motd
+  ## Set default motd
     - name: APT - Install dependencies for motd
       become: true
       package:
