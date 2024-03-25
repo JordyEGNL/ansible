@@ -9,6 +9,7 @@
         DEBIAN_FRONTEND: noninteractive
 
     - name: APT - Update packages
+      become: true
       apt:
         upgrade: true
 
