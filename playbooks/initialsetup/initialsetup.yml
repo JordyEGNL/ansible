@@ -1,5 +1,5 @@
 - name: VPS - Initial setup
-  hosts: virtualservers
+  hosts: demo
 
   tasks:
   ## Initial setup
