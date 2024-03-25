@@ -16,6 +16,12 @@ demo:
       ansible_host: 100.116.247.86
       ansible_user: jordy
 
+raspberry:
+  hosts:
+    lab-rpi-01:
+      ansible_host: 100.75.114.157
+      ansible_user: jordy
+
 
 hypervisors:
   hosts:
