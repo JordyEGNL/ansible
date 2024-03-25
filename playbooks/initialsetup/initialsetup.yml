@@ -132,17 +132,19 @@
         state: absent
       ignore_errors: yes
 
-    - name: Add Docker GPG apt key
-      become: true
-      apt_key:
-        url: https://download.docker.com/linux/ubuntu/gpg
-        state: present
+    # - name: Add Docker GPG apt key
+    #   become: true
+    #   apt_key:
+    #     url: https://download.docker.com/linux/ubuntu/gpg
+    #     state: present
 
-    - name: Add Docker repository
-      become: true
+    - name: Add Docker APT repository
       apt_repository:
-        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu jammy stable"
         state: present
+        filename: docker
+        update_cache: yes
+        key: https://download.docker.com/linux/ubuntu/gpg
 
     - name: APT - Install docker-ce
       become: true
