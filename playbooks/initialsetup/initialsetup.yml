@@ -135,12 +135,14 @@
       ignore_errors: yes
 
     - name: Make sure /etc/apt/keyrings exists
+      become: true
       file:
         path: /etc/apt/keyrings
         state: directory
         mode: '0755'
 
     - name: Download Docker GPG key
+      become: true
       get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /etc/apt/keyrings/docker.asc
