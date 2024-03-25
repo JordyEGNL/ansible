@@ -126,18 +126,19 @@
         state: latest
         update_cache: true
 
-    - name: Remove Docker repository configuration file
-      become: true
-      file:
-        path: /etc/apt/sources.list.d/docker.list
-        state: absent
-      ignore_errors: yes
-
-    # - name: Add Docker GPG apt key
+    # Remove old config file used in previous version of playbook
+    # - name: Remove Docker repository configuration file
     #   become: true
-    #   apt_key:
-    #     url: https://download.docker.com/linux/ubuntu/gpg
-    #     state: present
+    #   file:
+    #     path: /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
+    #     state: absent
+    #   ignore_errors: yes
+
+    - name: Add Docker GPG apt key
+      become: true
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
 
     - name: Add Docker APT repository
       apt_repository:
@@ -145,7 +146,6 @@
         state: present
         filename: docker
         update_cache: yes
-        key: https://download.docker.com/linux/ubuntu/gpg
 
     - name: APT - Install docker-ce
       become: true
