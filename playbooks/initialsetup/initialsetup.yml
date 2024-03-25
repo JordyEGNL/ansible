@@ -141,20 +141,39 @@
         state: directory
         mode: '0755'
 
-    - name: Download Docker GPG key
+    - name: UBUNTU - Download Docker GPG key
       become: true
       get_url:
         url: https://download.docker.com/linux/ubuntu/gpg
         dest: /etc/apt/keyrings/docker.asc
         mode: '0644'
+        when: ansible_distribution == 'Ubuntu'
 
-    - name: Add Docker APT repository
+    - name: DEBIAN - Download Docker GPG key
+      become: true
+      get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+        when: ansible_distribution == 'Debian'
+
+    - name: UBUNTU - Add Docker APT repository
       become: true
       apt_repository:
         repo: "deb [arch=arm64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable"
         state: present
         filename: docker
         update_cache: yes
+        when: ansible_distribution == 'Ubuntu'
+
+    - name: DEBIAN - Add Docker APT repository
+      become: true
+      apt_repository:
+        repo: "deb [arch=arm64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+        state: present
+        filename: docker
+        update_cache: yes
+        when: ansible_distribution == 'Debian'
 
     - name: APT - Install docker-ce
       become: true
