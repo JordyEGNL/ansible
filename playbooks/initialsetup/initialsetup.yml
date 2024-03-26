@@ -166,6 +166,15 @@
         state: absent
       ignore_errors: yes
 
+    # Remove old config file used in older docker versions
+    - name: Remove Docker repository configuration file
+      become: true
+      tags: [ 'docker' ]
+      file:
+        path: /etc/apt/sources.list.d/docker.list
+        state: absent
+      ignore_errors: yes
+
     - name: Make sure /etc/apt/keyrings exists
       become: true
       tags: [ 'docker' ]
