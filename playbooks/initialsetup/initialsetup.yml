@@ -3,6 +3,11 @@
 
   tasks:
   ## Initial setup
+    - name: Set hostname
+      become: true
+      hostname:
+        name: "{{ inventory_hostname }}"
+
     - name: APT - Set DEBIAN_FRONTEND to noninteractive
       shell: export DEBIAN_FRONTEND=noninteractive
       environment:
