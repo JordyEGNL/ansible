@@ -32,6 +32,22 @@
         mode: 0644
       when: docker_installed.stat.exists == True
 
+    - name: User input for Cloudflare token
+      pause:
+        prompt: "Enter your Cloudflare API token: "
+      register: cf_token
+      when: docker_installed.stat.exists == True
+
+    - name: Create .env file
+      copy:
+        content: |
+          CF_DNS_API_TOKEN={{ cf_token.user_input }}
+        dest: ~/docker/traefik/.env
+        owner: jordy
+        group: jordy
+        mode: 0644
+      when: docker_installed.stat.exists == True
+
     - name: Start the compose stack
       command: docker compose up -d
       args:
