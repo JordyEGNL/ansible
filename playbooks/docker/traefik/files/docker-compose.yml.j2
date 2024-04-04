@@ -1,0 +1,33 @@
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:v2.11
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - ./data/:/etc/traefik/
+      - ./logs/:/var/log/traefik/
+    networks:
+      - proxy
+    environment:
+      DOCKER_HOST: dockersocket
+    labels:
+      traefik.http.routers.api.rule: Host(`traefik.{{ ansible_facts['hostname'] }}.hoebergen.net`)
+      traefik.http.routers.api.entryPoints: https
+      traefik.http.routers.api.service: api@internal
+      traefik.enable: true
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    
+networks:
+  proxy:
+    driver: bridge
+    external: true

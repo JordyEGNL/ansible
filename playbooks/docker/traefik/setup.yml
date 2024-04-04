@@ -1,0 +1,44 @@
+- name: NEW - Install traefik
+  hosts: demo
+
+  tasks:
+    - name: Check if docker is installed
+      stat:
+        path: /usr/bin/docker
+      register: docker_installed
+
+    - name: Make sure the Traefik directory exists
+      file:
+        path: ~/docker/traefik/data
+        state: directory
+        mode: '0755'
+      when: docker_installed.stat.exists == True
+
+    - name: Copy docker compose file j2 template
+      copy:
+        src: "./files/docker-compose.yml.j2"
+        dest: ~/docker/traefik/docker-compose.yml
+        owner: jordy
+        group: jordy
+        mode: 0644
+      when: docker_installed.stat.exists == True
+
+    - name: Copy traefik configuration file
+      copy:
+        src: "./files/traefik.yml.j2"
+        dest: ~/docker/traefik/data/traefik.yml
+        owner: jordy
+        group: jordy
+        mode: 0644
+      when: docker_installed.stat.exists == True
+
+    - name: Start the compose stack
+      command: docker compose up -d
+      args:
+        chdir: ~/docker/traefik
+      when: docker_installed.stat.exists == True
+
+    
+
+
+      
