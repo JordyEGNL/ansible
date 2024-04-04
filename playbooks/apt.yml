@@ -8,9 +8,13 @@
       environment:
         DEBIAN_FRONTEND: noninteractive
 
+    - name: Disable upgrade of Tailscale
+      dpkg_selections:
+        name: tailscale
+        selection: hold
+
     - name: Update packages
       apt:
-        update_cache: true
-        upgrade: true
-        autoremove: true
-        autoclean: true
+        name: "*"
+        force_apt_get: true
+        state: latest
