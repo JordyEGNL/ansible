@@ -1,0 +1,7 @@
+- name: Proxmox setup
+  hosts:
+    - proxmox
+  remote_user: jordy
+  become: true
+  roles:
+    - role: apt

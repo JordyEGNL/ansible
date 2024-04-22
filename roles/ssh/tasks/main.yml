@@ -1,0 +1,6 @@
+- name: Add authorized key for user {{ ansible_user_id }}
+  authorized_key:
+    user: "{{ ansible_user }}"
+    state: present
+    key: https://github.com/{{ ssh_github_user }}.keys
+  when: ssh_github_user is defined

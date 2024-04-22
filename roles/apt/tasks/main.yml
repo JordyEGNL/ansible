@@ -1,0 +1,7 @@
+- name: APT setup
+  ansible.builtin.import_tasks: upgrade.yml
+
+- name: Unattended upgrades
+  ansible.builtin.import_tasks: unattended-upgrades.yml
+  when: 
+    - apt_unattended_upgrades == "enabled"
