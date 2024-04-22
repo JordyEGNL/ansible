@@ -2,10 +2,8 @@ proxmox:
   hosts:
     lab-pve-01:
       ansible_host: 100.72.155.135
-      ansible_user: root
     lab-pve-02:
       ansible_host: 100.96.34.25
-      ansible_user: root
       
 virtual:
   hosts:

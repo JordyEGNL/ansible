@@ -1,0 +1,13 @@
+- name: Raspberry setup
+  hosts:
+    - demo
+  vars:
+    motd_docker: "disabled"
+  remote_user: jordy
+  become: true
+  roles:
+    - role: hostname
+    - role: ssh
+    - role: apt
+    - role: shell
+    - role: motd

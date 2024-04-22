@@ -1,6 +1,8 @@
 - name: Proxmox setup
   hosts:
-    - proxmox
+    - demo
+  vars:
+    apt_unattended_upgrades: "disabled"
   remote_user: root
   become: true
   roles:

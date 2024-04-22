@@ -37,3 +37,11 @@
     owner: root
     group: root
     mode: '0655'
+
+- name: Remove docker motd
+  become: true
+  tags: [ 'motd' ]
+  file:
+    path: /etc/update-motd.d/60-docker
+    state: absent
+  when: motd_docker == "disabled"
