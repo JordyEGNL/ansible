@@ -1,5 +1,5 @@
 - name: NEW - Install traefik
-  hosts: demo
+  hosts: virtualservers
 
   tasks:
     - name: Check if docker is installed
