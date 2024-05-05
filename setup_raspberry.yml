@@ -1,6 +1,6 @@
 - name: Raspberry setup
   hosts:
-    - demo
+    - raspberry
   vars:
     motd_docker: "disabled"
   remote_user: jordy
