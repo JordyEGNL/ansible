@@ -3,6 +3,7 @@
     - raspberry
   vars:
     motd_docker: "disabled"
+    apt_unattended_upgrades: "disabled"
   remote_user: jordy
   become: true
   roles:
