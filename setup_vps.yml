@@ -2,7 +2,6 @@
   hosts:
     - virtual
   remote_user: jordy
-  ansible_user: jordy
   become: true
   roles:
     - role: hostname

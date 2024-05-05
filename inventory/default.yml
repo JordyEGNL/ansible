@@ -9,12 +9,16 @@ virtual:
   hosts:
     lab-vps-01:
       ansible_host: 100.123.120.33
+      ansible_user: jordy
     lab-vps-02:
       ansible_host: 100.114.244.139
+      ansible_user: jordy
     lab-vps-03:
       ansible_host: 100.98.101.15
+      ansible_user: jordy
     orc-vps-01:
       ansible_host: 100.102.124.47
+      ansible_user: jordy
 
 raspberry:
   hosts:
