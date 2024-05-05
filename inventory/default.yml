@@ -25,7 +25,7 @@ raspberry:
     lab-rpi-01:
       ansible_host: 100.75.114.157
       ansible_user: jordy
-    lab-pve-01:
+    lab-rpi-02:
       ansible_host: 100.101.193.23
       ansible_user: jordy
 
