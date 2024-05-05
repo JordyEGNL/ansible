@@ -5,6 +5,7 @@
   become: true
   roles:
     - role: hostname
+      tags: hostname
     - role: ssh
     - role: apt
     - role: shell

@@ -28,7 +28,7 @@
     path: /etc/update-motd.d/
     state: directory
 
-- name: Set default motd
+- name: Copy motd files
   become: true
   tags: [ 'motd' ]
   copy:
