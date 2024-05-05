@@ -14,7 +14,8 @@ PROCESSOR_NAME=`grep "model name" /proc/cpuinfo | cut -d ' ' -f3- | awk {'print 
 PROCESSOR_COUNT=`grep -ioP 'processor\t:' /proc/cpuinfo | wc -l`
 
 # get ip addresses
-IP=$(hostname -I | awk '{print $1}')
+IPV4=$(hostname -I | awk '{print $1}')
+IPV6=$(ip addr show | grep -oE 'inet6 .*' | awk '{print $2}' | sed -n '2p')
 TAILSCALE_IP=$(ip addr show tailscale0 | awk '/inet /{print $2}' | cut -d '/' -f 1)
 
 W="\e[0;39m"
@@ -25,7 +26,8 @@ ${W}System information:
 $W  Distro......: $W`cat /etc/*release | grep "PRETTY_NAME" | cut -d "=" -f 2- | sed 's/"//g'`
 $W  Kernel......: $W`uname -sr`
 
-$W  Local IP....: $W$IP
+$W  Local IPv4..: $W$IPV4
+$W  Local IPv6..: $W$IPV6
 $W  Tailscale IP: $W$TAILSCALE_IP
 
 $W  Uptime......: $W`uptime -p`
