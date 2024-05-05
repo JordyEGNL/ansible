@@ -1,4 +1,4 @@
-- name: Add authorized key for user {{ ansible_user }}
+- name: Add authorized key for user {{ ansible_user_id }}
   authorized_key:
     user: "{{ ansible_user }}"
     state: present
