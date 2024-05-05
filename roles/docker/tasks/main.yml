@@ -1,0 +1,139 @@
+## Add aliases to .zshrc
+- name: Add docker alias to .zshrc
+  become_user: "{{ ansible_user }}"
+  tags: [ 'docker' ]
+  lineinfile:
+    path: ~/.zshrc
+    line: 'alias d="docker"'
+    state: present
+
+- name: Add docker compose alias to .zshrc
+  become_user: "{{ ansible_user }}"
+  tags: [ 'docker' ]
+  lineinfile:
+    path: ~/.zshrc
+    line: 'alias dc="docker compose"'
+    state: present
+
+- name: Add docker compose up alias to .zshrc
+  become_user: "{{ ansible_user }}"
+  tags: [ 'docker' ]
+  lineinfile:
+    path: ~/.zshrc
+    line: 'alias dcu="docker compose up -d"'
+    state: present
+
+- name: Add docker compose up with logs alias to .zshrc
+  become_user: "{{ ansible_user }}"
+  tags: [ 'docker' ]
+  lineinfile:
+    path: ~/.zshrc
+    line: 'alias dcul="docker compose up -d && docker compose logs -f"'
+    state: present
+
+## Install Docker
+- name: Install dependencies for Docker
+  become: true
+  tags: [ 'docker' ]
+  apt:
+    pkg:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - python3-pip
+      - virtualenv
+      - python3-setuptools
+    state: latest
+    update_cache: true
+
+# Remove old config file used in previous version of playbook
+- name: Remove Docker repository configuration file
+  become: true
+  tags: [ 'docker' ]
+  file:
+    path: /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
+    state: absent
+  ignore_errors: true
+
+- name: Remove Docker repository configuration file
+  become: true
+  tags: [ 'docker' ]
+  file:
+    path: /etc/apt/sources.list.d/docker.list
+    state: absent
+  ignore_errors: true
+
+- name: Make sure /etc/apt/keyrings exists
+  become: true
+  tags: [ 'docker' ]
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: UBUNTU - Download Docker GPG key
+  become: true
+  tags: [ 'docker' ]
+  get_url:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+  when: ansible_distribution == 'Ubuntu'
+
+- name: DEBIAN - Download Docker GPG key
+  become: true
+  tags: [ 'docker' ]
+  get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /etc/apt/keyrings/docker.asc
+    mode: '0644'
+  when: ansible_distribution == 'Debian'
+
+- name: UBUNTU - Add Docker APT repository
+  become: true
+  tags: [ 'docker' ]
+  apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu   {{ ansible_distribution_release }} stable"
+    state: present
+    filename: docker
+    update_cache: yes
+  when: ansible_distribution == 'Ubuntu'
+
+- name: DEBIAN - Add Docker APT repository
+  become: true
+  tags: [ 'docker' ]
+  apt_repository:
+    repo: "deb [arch=arm64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian   {{ ansible_distribution_release }} stable"
+    state: present
+    filename: docker
+    update_cache: yes
+  when: ansible_distribution == 'Debian'
+
+- name: Install docker packages
+  become: true
+  tags: [ 'docker' ]
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: latest
+    update_cache: true
+
+- name: Create docker directory
+  become_user: "{{ ansible_user }}"
+  tags: [ 'docker' ]
+  file:
+    path: ~/docker
+    state: directory
+
+- name: Add ansible_user to docker group
+  become: true
+  tags: [ 'docker' ]
+  user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: yes

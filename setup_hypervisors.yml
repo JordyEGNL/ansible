@@ -1,0 +1,9 @@
+- name: Proxmox setup
+  hosts:
+    - demo
+  vars:
+    apt_unattended_upgrades: "disabled"
+  remote_user: root
+  become: true
+  roles:
+    - role: apt

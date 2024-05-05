@@ -1,0 +1,94 @@
+## Install Oh My Zsh
+- name: APT - Install Zsh
+  become: true
+  tags: [ 'shell' ]
+  package:
+    name: 'zsh'
+    state: present
+
+- name: Check if Oh My Zsh is installed (1/2)
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  stat:
+    path: ~/.oh-my-zsh
+  register: ohmyzsh_installed
+
+#- name: Debug ohmyzsh_installed variable
+#  debug:
+#    var: ohmyzsh_installed
+
+- name: SHELL - Install Oh My Zsh
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  when: ohmyzsh_installed.stat.exists != True
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+
+- name: Check if Oh My Zsh is installed (2/2)
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  stat:
+    path: ~/.oh-my-zsh
+  register: ohmyzsh_installed
+
+- name: Set ZSH_THEME in .zshrc
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  when: ohmyzsh_installed.stat.exists == True
+  lineinfile:
+    path: ~/.zshrc
+    regexp: '^ZSH_THEME='
+    line: 'ZSH_THEME="agnoster"'
+    state: present
+
+- name: Set Zsh as default shell for user
+  become: true
+  tags: [ 'shell' ]
+  when: ohmyzsh_installed.stat.exists == True
+  command: usermod --shell /bin/zsh "{{ ansible_user }}"
+  changed_when: false
+
+## Install Zsh plugins (Zoxide)
+- name: APT - Install dependencies for Zoxide
+  become: true
+  tags: [ 'shell' ]
+  package:
+    name: 'fzf'
+    state: present
+
+- name: Check if Zoxide is installed (1/2)
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  stat:
+    path: ~/.local/bin/zoxide
+  register: zoxide_check
+
+- name: SHELL - Install Zoxide for Zsh
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  when: zoxide_check.stat.exists == False
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
+
+- name: Check if Zoxide is installed (2/2)
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  stat:
+    path: ~/.local/bin/zoxide
+  register: zoxide_check
+
+- name: Add ~/.local/bin to PATH
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  when: zoxide_check.stat.exists == True
+  lineinfile:
+    path: ~/.zshrc
+    line: 'export PATH="$HOME/.local/bin:$PATH"'
+    state: present
+
+- name: Add Zoxide to .zshrc
+  become_user: "{{ ansible_user }}"
+  tags: [ 'shell' ]
+  when: zoxide_check.stat.exists == True
+  lineinfile:
+    path: ~/.zshrc
+    line: 'eval "$(zoxide init zsh)"'
+    state: present

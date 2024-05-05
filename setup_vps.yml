@@ -1,0 +1,26 @@
+- name: VPS setup
+  hosts:
+    - virtual
+  remote_user: jordy
+  become: true
+  roles:
+    - role: hostname
+    - role: ssh
+    - role: apt
+    - role: shell
+    - role: docker
+    - role: motd
+
+- name: DEMO setup
+  hosts:
+    - demo
+  remote_user: jordy
+  become: true
+  roles:
+    - role: hostname
+    - role: ssh
+    - role: apt
+    - role: shell
+    - role: docker
+    - role: motd
+

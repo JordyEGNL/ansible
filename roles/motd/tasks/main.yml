@@ -1,0 +1,47 @@
+- name: Install dependencies for motd
+  become: true
+  tags: [ 'motd' ]
+  package:
+    name: 
+      - figlet
+      - lolcat
+    state: present
+
+- name: Ensure /etc/update-motd.d/ directory is empty
+  become: true
+  tags: [ 'motd' ]
+  file:
+    path: /etc/update-motd.d/
+    state: absent
+
+- name: Ensure /etc/motd directory is empty
+  become: true
+  tags: [ 'motd' ]
+  file:
+    path: /etc/motd
+    state: absent
+
+- name: Create motd directory
+  become: true
+  tags: [ 'motd' ]
+  file:
+    path: /etc/update-motd.d/
+    state: directory
+
+- name: Set default motd
+  become: true
+  tags: [ 'motd' ]
+  copy:
+    src: motdfiles/
+    dest: /etc/update-motd.d/
+    owner: root
+    group: root
+    mode: '0655'
+
+- name: Remove docker motd
+  become: true
+  tags: [ 'motd' ]
+  file:
+    path: /etc/update-motd.d/60-docker
+    state: absent
+  when: motd_docker == "disabled"
