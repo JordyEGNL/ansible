@@ -1,0 +1,21 @@
+- name: Update all virtual machines
+  hosts: virtual
+  become: true
+
+  tasks:
+    - name: Set DEBIAN_FRONTEND to noninteractive
+      shell: export DEBIAN_FRONTEND=noninteractive
+      environment:
+        DEBIAN_FRONTEND: noninteractive
+
+    - name: Update package cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Upgrade packages
+      apt:
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+        force_apt_get: yes
