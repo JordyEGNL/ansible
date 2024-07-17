@@ -16,9 +16,6 @@ virtual:
     lab-vps-03:
       ansible_host: 10.0.10.103
       ansible_user: jordy
-    orc-vps-01:
-      ansible_host: 0.0.0.0
-      ansible_user: jordy
 
 raspberry:
   hosts:
