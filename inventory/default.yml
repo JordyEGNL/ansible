@@ -27,3 +27,12 @@ raspberry:
     lab-rpi-02:
       ansible_host: 10.0.10.22
       ansible_user: jordy
+
+test:
+  hosts:
+    test-vps-01:
+      ansible_host: 10.0.20.11
+      ansible_user: jordy
+    test-vps-02:
+      ansible_host: 10.0.20.12
+      ansible_user: jordy
