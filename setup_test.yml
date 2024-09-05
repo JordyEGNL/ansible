@@ -1,0 +1,14 @@
+- name: Test setup
+  hosts:
+    - test
+  remote_user: jordy
+  become: true
+  roles:
+    - role: hostname
+      tags: hostname
+    - role: ssh
+      tags: ssh
+    - role: apt
+    - role: shell
+    - role: docker
+    - role: motd
