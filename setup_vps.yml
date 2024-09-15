@@ -12,6 +12,7 @@
     - role: shell
     - role: docker
     - role: motd
+      tags: motd
 
 - name: DEMO setup
   hosts:
