@@ -28,11 +28,8 @@ raspberry:
       ansible_host: 10.0.10.22
       ansible_user: jordy
 
-test:
+monitoring:
   hosts:
-    test-vps-01:
-      ansible_host: 10.0.20.11
-      ansible_user: jordy
-    test-vps-02:
-      ansible_host: 10.0.20.12
+    lab-mon-01:
+      ansible_host: 10.0.10.110
       ansible_user: jordy
