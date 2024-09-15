@@ -7,6 +7,28 @@
       - lolcat
     state: present
 
+- name: Disable MOTD news
+  ansible.builtin.lineinfile:
+    path: /etc/default/motd-news
+    regexp: '^ENABLED=1'
+    line: 'ENABLED=0'
+    state: present
+  become: yes
+
+- name: Disable motd-news.service
+  ansible.builtin.systemd:
+    name: motd-news.service
+    enabled: false
+    state: stopped
+  become: yes
+
+- name: Disable motd-news.timer
+  ansible.builtin.systemd:
+    name: motd-news.timer
+    enabled: false
+    state: stopped
+  become: yes
+
 - name: Ensure /etc/update-motd.d/ directory is empty
   become: true
   tags: [ 'motd' ]
