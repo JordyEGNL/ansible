@@ -2,7 +2,6 @@
   hosts:
     - virtual
   remote_user: jordy
-  become: true
   roles:
     - role: hostname
       tags: hostname
@@ -13,3 +12,5 @@
     - role: docker
     - role: motd
       tags: motd
+    - role: checkmk.general.agent
+      tags: checkmk-agent
