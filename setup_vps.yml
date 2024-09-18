@@ -3,8 +3,8 @@
     - virtual
   remote_user: jordy
   roles:
-    - role: hostname
-      tags: hostname
+    - role: basics
+      tags: basics
 
     - role: ssh
       tags: ssh

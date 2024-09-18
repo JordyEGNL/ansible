@@ -4,8 +4,8 @@
   remote_user: jordy
   become: true
   roles:
-    - role: hostname
-      tags: hostname
+    - role: basics
+      tags: basics
     - role: ssh
       tags: ssh
     - role: apt

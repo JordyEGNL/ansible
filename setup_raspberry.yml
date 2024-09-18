@@ -7,7 +7,7 @@
   remote_user: jordy
   become: true
   roles:
-    - role: hostname
+    - role: basics
     - role: ssh
     - role: apt
     - role: shell

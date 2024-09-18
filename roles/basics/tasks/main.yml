@@ -1,0 +1,13 @@
+- name: Set hostname
+  become: true
+  hostname:
+    name: "{{ inventory_hostname }}"
+  when:
+    - ansible_hostname != inventory_hostname
+
+- name: Set timezone
+  become: true
+  timezone:
+    name: "{{ timezone }}"
+  vars:
+    timezone: "Europe/Amsterdam"
