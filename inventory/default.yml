@@ -18,6 +18,9 @@ virtual:
     lab-vps-03:
       ansible_host: 10.0.10.103
       ansible_user: jordy
+    str-vps-01:
+      ansible_host: 100.88.104.87
+      ansible_user: jordy
 
 raspberry:
   hosts:
