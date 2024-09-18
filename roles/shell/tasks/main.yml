@@ -20,8 +20,8 @@
 - name: SHELL - Install Oh My Zsh
   become_user: "{{ ansible_user }}"
   tags: [ 'shell' ]
-  when: ohmyzsh_installed.stat.exists != True
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  when: ohmyzsh_installed.stat.exists == False
 
 - name: Check if Oh My Zsh is installed (2/2)
   become_user: "{{ ansible_user }}"
@@ -65,8 +65,8 @@
 - name: SHELL - Install Zoxide for Zsh
   become_user: "{{ ansible_user }}"
   tags: [ 'shell' ]
-  when: zoxide_check.stat.exists == False
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
+  when: zoxide_check.stat.exists == False
 
 - name: Check if Zoxide is installed (2/2)
   become_user: "{{ ansible_user }}"
