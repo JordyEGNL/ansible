@@ -5,12 +5,21 @@
   roles:
     - role: hostname
       tags: hostname
+
     - role: ssh
       tags: ssh
+
     - role: apt
+      tags: apt
+
     - role: shell
+      tags: shell
+
     - role: docker
+      tags: docker
+
     - role: motd
       tags: motd
+      
     - role: checkmk.general.agent
       tags: checkmk-agent
