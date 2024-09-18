@@ -1,5 +1,6 @@
 # Source: https://github.com/ahinko/home-ops/blob/main/infrastructure/ansible/roles/apt/tasks/unattended-upgrades.yaml
 - name: Copy 20auto-upgrades unattended-upgrades config
+  become: true
   ansible.builtin.blockinfile:
     path: /etc/apt/apt.conf.d/20auto-upgrades
     mode: "0644"
@@ -11,6 +12,7 @@
       APT::Periodic::Unattended-Upgrade "1";
 
 - name: Copy 50unattended-upgrades unattended-upgrades config
+  become: true
   ansible.builtin.blockinfile:
     path: /etc/apt/apt.conf.d/50unattended-upgrades
     mode: "0644"
@@ -25,12 +27,14 @@
       };
 
 - name: Start unattended-upgrades service
+  become: true
   ansible.builtin.systemd:
     name: unattended-upgrades
     enabled: true
     state: started
 
 - name: Restart unattended-upgrades service
+  become: true
   ansible.builtin.service:
     name: unattended-upgrades.service
     daemon_reload: true
