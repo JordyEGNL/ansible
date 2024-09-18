@@ -1,0 +1,11 @@
+- name: Only allow 443 and 80 on the firewall
+  become: true
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+    proto: tcp
+    state: enabled
+    comment: "Allow HTTP and HTTPS"
+  with_items:
+    - 443
+    - 80
