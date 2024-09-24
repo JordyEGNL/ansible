@@ -19,7 +19,7 @@ virtual:
       ansible_host: 10.0.10.103
       ansible_user: jordy
     str-vps-01:
-      ansible_host: 100.88.104.87
+      ansible_host: 172.16.2.2
       ansible_user: jordy
 
 raspberry:
@@ -29,10 +29,4 @@ raspberry:
       ansible_user: jordy
     lab-rpi-02:
       ansible_host: 10.0.10.22
-      ansible_user: jordy
-
-monitoring:
-  hosts:
-    lab-mon-01:
-      ansible_host: 10.0.10.110
       ansible_user: jordy
