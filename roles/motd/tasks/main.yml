@@ -13,21 +13,23 @@
     regexp: '^ENABLED=1'
     line: 'ENABLED=0'
     state: present
-  become: yes
+  become: true
 
 - name: Disable motd-news.service
   ansible.builtin.systemd:
     name: motd-news.service
     enabled: false
     state: stopped
-  become: yes
+  become: true
+  ignore_errors: true
 
 - name: Disable motd-news.timer
   ansible.builtin.systemd:
     name: motd-news.timer
     enabled: false
     state: stopped
-  become: yes
+  become: true
+  ignore_errors: true
 
 - name: Ensure /etc/update-motd.d/ directory is empty
   become: true
