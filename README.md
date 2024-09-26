@@ -1,6 +1,9 @@
 # ansible-playbooks
 Ansible playbooks and config for homelab automation
 
+## Versions
+- Ansible: ~> 2.17
+
 ## Common commands
 
 ### Run a playbook

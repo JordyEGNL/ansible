@@ -23,3 +23,6 @@
       
     - role: checkmk.general.agent
       tags: checkmk-agent
+
+    - role: monitoring
+      tags: monitoring
