@@ -5,7 +5,7 @@
     executable: pip3
     break_system_packages: true
 
-- name: Add docker_mk.py to CheckMK plugins (wget from https://checkmk.hoebergen.net/cmk/check_mk/agents/plugins/mk_docker.py)
+- name: Add docker_mk.py to CheckMK plugins
   become: true
   get_url:
     url: https://checkmk.hoebergen.net/cmk/check_mk/agents/plugins/mk_docker.py
@@ -13,7 +13,7 @@
     mode: '0754'
     owner: root
     group: root
-    force: yes
+    force: true 
   
 - name: Configure Docker monitoring
   become: true
@@ -23,7 +23,7 @@
     mode: '0644'
     owner: root
     group: root
-    force: yes
+    force: true
 
 - name: Monitor on container name instead of ID
   become: true
