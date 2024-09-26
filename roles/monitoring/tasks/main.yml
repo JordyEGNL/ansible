@@ -30,5 +30,5 @@
   lineinfile:
     path: /etc/check_mk/docker.cfg
     regexp: '^skip_sections:.*'
-    line: '# skip_sections: docker_node_disk_usage,docker_node_images'
+    line: 'skip_sections: docker_container_diskstat'
     state: present
