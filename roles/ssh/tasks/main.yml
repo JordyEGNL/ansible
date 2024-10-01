@@ -4,3 +4,20 @@
     state: present
     key: https://github.com/{{ ssh_github_user }}.keys
   when: ssh_github_user is defined
+
+- name: Reload SSH service
+  become: true
+  systemd:
+    name: ssh # Renamed from sshd since Ubuntu 24.04
+    state: restarted
+
+- name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
+  wait_for:
+    port: 22
+    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    search_regex: OpenSSH
+    delay: 10
+    timeout: 300
+
+- name: Ping hosts
+  ping:
