@@ -25,7 +25,7 @@
     group: root
     force: true
 
-- name: Monitor on container name instead of ID
+- name: Disable unused sections
   become: true
   lineinfile:
     path: /etc/check_mk/docker.cfg
