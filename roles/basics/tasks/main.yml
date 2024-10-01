@@ -11,3 +11,10 @@
     name: "{{ timezone }}"
   vars:
     timezone: "Europe/Amsterdam"
+
+- name: Install Python3 interpreter
+  become: true
+  apt:
+    name: python3
+    state: present
+    update_cache: true
