@@ -8,6 +8,7 @@
     name: docker
     executable: pip3
     break_system_packages: true
+  when: checkmk_docker != "disabled"
 
 - name: Add docker_mk.py to CheckMK plugins
   become: true
@@ -18,6 +19,7 @@
     owner: root
     group: root
     force: true 
+  when: checkmk_docker != "disabled"
   
 - name: Configure Docker monitoring
   become: true
@@ -28,6 +30,7 @@
     owner: root
     group: root
     force: true
+  when: checkmk_docker != "disabled"
 
 - name: Disable unused sections
   become: true
@@ -36,3 +39,4 @@
     regexp: '^skip_sections:.*'
     line: 'skip_sections: docker_container_diskstat'
     state: present
+  when: checkmk_docker != "disabled"
