@@ -1,0 +1,30 @@
+- name: Update all virtual machines
+  hosts: virtual
+
+  tasks:
+    - name: Prune Docker
+      docker_prune:
+        builder_cache: true
+        images: true
+        images_filters:
+          dangling: false
+        networks: true
+        containers: true
+        volumes: true
+      register: docker_prune_result
+
+
+    - name: debug 
+      debug:
+        var: docker_prune_result
+
+    - name: Calculate total reclaimed space per host
+      set_fact:
+        total_reclaimed_space: "{{ (((docker_prune_result.builder_cache_space_reclaimed | default(0)) 
+          + (docker_prune_result.containers_space_reclaimed | default(0)) 
+          + (docker_prune_result.images_space_reclaimed | default(0)) 
+          + (docker_prune_result.volumes_space_reclaimed | default(0))) / 1048576) | int }}"
+
+    - name: Show total reclaimed space per host
+      debug:
+        msg:  "Host {{ inventory_hostname }}: {{ total_reclaimed_space }} MB reclaimed"
