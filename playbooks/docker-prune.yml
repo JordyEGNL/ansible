@@ -13,11 +13,6 @@
         volumes: true
       register: docker_prune_result
 
-
-    - name: debug 
-      debug:
-        var: docker_prune_result
-
     - name: Calculate total reclaimed space per host
       set_fact:
         total_reclaimed_space: "{{ (((docker_prune_result.builder_cache_space_reclaimed | default(0)) 
