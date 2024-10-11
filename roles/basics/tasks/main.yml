@@ -18,3 +18,10 @@
     name: python3
     state: present
     update_cache: true
+
+- name: Install btop
+  become: true
+  apt:
+    name: btop
+    state: present
+    update_cache: true
