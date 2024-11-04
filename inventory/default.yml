@@ -1,4 +1,4 @@
-proxmox:
+hypervisors:
   hosts:
     lab-pve-01:
       ansible_host: 10.0.0.101
@@ -7,7 +7,7 @@ proxmox:
       ansible_host: 10.0.0.102
       ansible_user: root
 
-virtual:
+virtualmachines:
   hosts:
     lab-vps-01:
       ansible_host: 10.0.10.101

@@ -1,0 +1,3 @@
+motd_docker: "disabled"
+apt_unattended_upgrades: "disabled"
+checkmk_docker: "disabled"

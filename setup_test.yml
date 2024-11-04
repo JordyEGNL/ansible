@@ -1,14 +1,10 @@
 - name: Test setup
   hosts:
     - test
-  remote_user: jordy
-  become: true
   roles:
-    - role: basics
-      tags: basics
-    - role: ssh
-      tags: ssh
-    - role: apt
-    - role: shell
-    - role: docker
-    - role: motd
+    - { role: basics, tags: basics }
+    - { role: ssh, tags: ssh }
+    - { role: apt, tags: apt }
+    - { role: shell, tags: shell }
+    - { role: docker, tags: docker }
+    - { role: motd, tags: motd }

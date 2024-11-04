@@ -1,25 +1,11 @@
 - name: VPS setup
   hosts:
-    - virtual
-  remote_user: jordy
+    - virtualmachines
   roles:
-    - role: basics
-      tags: basics
-
-    - role: ssh
-      tags: ssh
-
-    - role: apt
-      tags: apt
-
-    - role: shell
-      tags: shell
-
-    - role: docker
-      tags: docker
-
-    - role: motd
-      tags: motd
-
-    - role: monitoring
-      tags: monitoring
+    - { role: basics, tags: basics }
+    - { role: ssh, tags: ssh }
+    - { role: apt, tags: apt }
+    - { role: shell, tags: shell }
+    - { role: docker, tags: docker }
+    - { role: motd, tags: motd }
+    - { role: monitoring, tags: monitoring }

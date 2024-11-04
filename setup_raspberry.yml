@@ -1,15 +1,9 @@
 - name: Raspberry setup
   hosts:
     - raspberry
-  vars:
-    motd_docker: "disabled"
-    apt_unattended_upgrades: "disabled"
-    checkmk_docker: "disabled"
-  remote_user: jordy
-  become: true
   roles:
-    - role: basics
-    - role: ssh
-    - role: apt
-    - role: shell
-    - role: motd
+    - { role: basics, tags: basics }
+    - { role: ssh, tags: ssh }
+    - { role: apt, tags: apt }
+    - { role: shell, tags: shell }
+    - { role: motd, tags: motd }

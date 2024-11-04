@@ -76,28 +76,3 @@
     path: ~/.zshrc
     line: 'eval "$(zoxide init zsh)"'
     state: present
-
-# Install BTOP for monitoring
-- name: APT - Install BTOP
-  become: true
-  package:
-    name: 'btop'
-    state: present
-
-- name: APT - Add Fastfetch PPA
-  become: true
-  apt_repository:
-    repo: 'ppa:zhangsongcui3371/fastfetch'
-  when: ansible_facts['os_family'] == 'Debian' and ansible_facts['distribution'] == 'Ubuntu'
-
-- name: APT - Update cache
-  become: true
-  apt:
-    update_cache: yes
-  when: ansible_facts['os_family'] == 'Debian' and ansible_facts['distribution'] == 'Ubuntu'
-
-- name: APT - Install fastfetch
-  become: true
-  package:
-    name: 'fastfetch'
-    state: present
