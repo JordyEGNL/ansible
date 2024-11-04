@@ -30,7 +30,7 @@
   become: true
   apt_repository:
     repo: 'ppa:zhangsongcui3371/fastfetch'
-  when: ansible_facts['os_family'] == 'Debian'
+  when: ansible_facts['os_family'] == 'Debian' and ansible_facts['distribution'] == 'Ubuntu'
 
 - name: APT - Install fastfetch
   become: true
@@ -38,3 +38,4 @@
     name: 'fastfetch'
     state: present
     update_cache: true
+  when: ansible_facts['os_family'] == 'Debian' and ansible_facts['distribution'] == 'Ubuntu'
