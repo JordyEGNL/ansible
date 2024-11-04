@@ -2,31 +2,29 @@ hypervisors:
   hosts:
     lab-pve-01:
       ansible_host: 10.0.0.101
-      ansible_user: root
     lab-pve-02:
       ansible_host: 10.0.0.102
-      ansible_user: root
+  vars:
+    ansible_user: root
 
 virtualmachines:
   hosts:
     lab-vps-01:
       ansible_host: 10.0.10.101
-      ansible_user: jordy
     lab-vps-02:
       ansible_host: 10.0.10.102
-      ansible_user: jordy
     lab-vps-03:
       ansible_host: 10.0.10.103
-      ansible_user: jordy
     str-vps-01:
       ansible_host: 172.16.2.2
-      ansible_user: jordy
+  vars:
+    ansible_user: jordy
 
 raspberry:
   hosts:
     lab-rpi-01:
       ansible_host: 10.0.10.21
-      ansible_user: jordy
     lab-rpi-02:
       ansible_host: 10.0.10.22
-      ansible_user: jordy
+  vars:
+    ansible_user: jordy
