@@ -1,0 +1,2 @@
+- name: Keepalived setup
+  ansible.builtin.import_tasks: keepalived.yml

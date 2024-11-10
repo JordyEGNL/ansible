@@ -3,3 +3,4 @@
     - demo
   roles:
     - { role: apt, tags: apt }
+    - { role: proxmox, tags: proxmox }

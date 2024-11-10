@@ -6,6 +6,8 @@ hypervisors:
       ansible_host: 10.0.0.102
   vars:
     ansible_user: root
+    keepalived_virtual_ip: 10.0.0.100
+    keepalived_virtual_ip_cidr: 24
 
 virtualmachines:
   hosts:
