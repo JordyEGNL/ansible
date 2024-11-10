@@ -33,5 +33,5 @@ ansible -m ping all -i inventory/default.yml
 
 ### Encrypt a variable 
 ```bash
-ansible-vault encrypt_string --vault-id @prompt --name <variable>
+ansible-vault encrypt_string --name <variable>
 ```
