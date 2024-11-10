@@ -3,5 +3,5 @@
 
 - name: Unattended upgrades
   ansible.builtin.import_tasks: unattended-upgrades.yml
-  when: 
+  when:
     - apt_unattended_upgrades == "enabled"

@@ -1,6 +1,12 @@
 - name: Proxmox setup
   hosts:
-    - demo
+    - hypervisors
   roles:
     - { role: apt, tags: apt }
     - { role: proxmox, tags: proxmox }
+    - { role: ssh, tags: ssh }
+  handlers:
+    - name: Restart keepalived
+      ansible.builtin.service:
+        name: keepalived
+        state: restarted

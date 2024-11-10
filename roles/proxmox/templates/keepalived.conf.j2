@@ -4,7 +4,7 @@ vrrp_instance VI_1 {
     advert_int {{ keepalived_advert_int | default('1') }}
     unicast_src_ip {{ ansible_host }}
     unicast_peer {
-{% for host in groups['proxmox'] %}
+{% for host in groups['hypervisors'] %}
 {% if host != inventory_hostname %}
         {{ hostvars[host]['ansible_host'] }}
 {% endif %}

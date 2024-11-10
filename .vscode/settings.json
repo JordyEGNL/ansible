@@ -1,0 +1,12 @@
+{
+    "editor.tabSize": 2,
+    "ansible.python.interpreterPath": "/usr/bin/python3",
+    "files.associations": {
+        "**/tasks/*.yml": "ansible",
+        "*.yml": "yaml",
+        "*.yaml.j2": "yaml",
+        "**/group_vars/*.yml": "ansible",
+        "**/host_vars/*.yml": "ansible",
+        "**/vars/*.yml": "ansible"
+    }
+}

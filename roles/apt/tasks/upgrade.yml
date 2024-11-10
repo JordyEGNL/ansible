@@ -1,12 +1,9 @@
-- name: Set DEBIAN_FRONTEND to noninteractive
-  shell: export DEBIAN_FRONTEND=noninteractive
-  environment:
-    DEBIAN_FRONTEND: noninteractive
-
 - name: Update packages
   become: true
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     upgrade: true
     cache_valid_time: 3600
     autoremove: true
+  environment:
+    DEBIAN_FRONTEND: noninteractive

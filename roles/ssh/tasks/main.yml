@@ -1,17 +1,17 @@
 - name: Add authorized key for user {{ ansible_user }}
-  authorized_key:
+  ansible.posix.authorized_key:
     user: "{{ ansible_user }}"
     state: present
     key: https://github.com/{{ ssh_github_user }}.keys
   when: ssh_github_user is defined
 
 - name: Wait 300 seconds for port 22 to become open and contain "OpenSSH"
-  wait_for:
+  ansible.builtin.wait_for:
     port: 22
-    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    host: '{{ (ansible_ssh_host | default(ansible_host)) | default(inventory_hostname) }}'
     search_regex: OpenSSH
     delay: 10
     timeout: 300
 
 - name: Ping hosts
-  ping:
+  ansible.builtin.ping:
