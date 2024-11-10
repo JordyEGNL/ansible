@@ -1,2 +1,8 @@
 - name: Keepalived setup
   ansible.builtin.import_tasks: keepalived.yml
+
+- name: Glances setup
+  ansible.builtin.import_tasks: glances.yml
+
+- name: Cloudflared setup
+  ansible.builtin.import_tasks: cloudflared.yml
