@@ -1,4 +1,6 @@
 apt_unattended_upgrades: "disabled"
+keepalived_virtual_ip: 10.0.0.100
+keepalived_virtual_ip_cidr: 24
 keepalived_auth_pass: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           35326162366239633065663438666436643165666164663638363837316332346363323637623236
