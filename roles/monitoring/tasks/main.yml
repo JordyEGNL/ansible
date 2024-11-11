@@ -1,10 +1,14 @@
+- name: Include checkmk variables
+  ansible.builtin.include_vars:
+    file: vars/checkmk.yml
+
 - name: Include CheckMK agent role
-  include_role:
+  ansible.builtin.include_role:
     name: checkmk.general.agent
 
 - name: Install docker package with pip3
   become: true
-  pip:
+  ansible.builtin.pip:
     name: docker
     executable: pip3
     break_system_packages: true
@@ -12,19 +16,19 @@
 
 - name: Add docker_mk.py to CheckMK plugins
   become: true
-  get_url:
-    url: https://checkmk.hoebergen.net/cmk/check_mk/agents/plugins/mk_docker.py
+  ansible.builtin.get_url:
+    url: "{{ checkmk_agent_server_protocol }}://{{ checkmk_agent_server }}/{{ checkmk_agent_site }}/check_mk/agents/plugins/mk_docker.py"
     dest: /usr/lib/check_mk_agent/plugins/mk_docker.py
     mode: '0754'
     owner: root
     group: root
-    force: true 
+    force: true
   when: checkmk_docker != "disabled"
-  
+
 - name: Configure Docker monitoring
   become: true
-  get_url:
-    url: https://checkmk.hoebergen.net/cmk/check_mk/agents/cfg_examples/docker.cfg
+  ansible.builtin.get_url:
+    url: "{{ checkmk_agent_server_protocol }}://{{ checkmk_agent_server }}/{{ checkmk_agent_site }}/check_mk/agents/cfg_examples/docker.cfg"
     dest: /etc/check_mk/docker.cfg
     mode: '0644'
     owner: root
@@ -34,7 +38,7 @@
 
 - name: Disable unused sections
   become: true
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: /etc/check_mk/docker.cfg
     regexp: '^skip_sections:.*'
     line: 'skip_sections: docker_container_diskstat'

@@ -2,37 +2,4 @@
 # CheckMK Variables
 #
 
-checkmk_agent_edition: cre
-checkmk_agent_version: "2.3.0p15"
-checkmk_agent_server_protocol: https
-checkmk_agent_server: checkmk.hoebergen.net
-checkmk_agent_server_validate_certs: 'false'
-checkmk_agent_server_port: "{% if checkmk_agent_server_protocol == 'https' %}443{% else %}80{% endif %}"
-
-checkmk_agent_tls: 'true'
-checkmk_agent_site: cmk
-checkmk_agent_user: cmkadmin
-checkmk_agent_pass: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          33343139373863396536616238663764333664373430663338366136383137383934313262343838
-          6565373063366463636639376537313538346337343365310a653461643334383163336330636461
-          66656437666532613964383931373163643838663830663132666637326265363139323931633933
-          6563313266383262610a666461643939663930386266626132356231363566616237623537653233
-          61613637336364623936616463353665356435373635623733316565323535303565
-checkmk_agent_registration_server: "10.0.10.110:8000"
-checkmk_agent_registration_site: "{{ checkmk_agent_site }}"
-
-checkmk_agent_add_host: 'false'
-checkmk_agent_delegate_api_calls: localhost
-checkmk_agent_host_attributes:
-    ipaddress: "{{ checkmk_agent_host_ip | default(omit) }}"
-checkmk_agent_host_name: "{{ inventory_hostname | upper }}"
-checkmk_agent_host_ip: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
-checkmk_agent_port: 6556
-checkmk_agent_auto_activate: 'true'
-checkmk_agent_folder: "/"
-
-checkmk_agent_configure_firewall: 'true'
-checkmk_agent_mode: pull
-checkmk_agent_no_log: 'true'
-checkmk_agent_server_ips: ["10.0.10.110"]
+checkmk_docker: "enabled"

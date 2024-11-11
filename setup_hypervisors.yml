@@ -5,6 +5,7 @@
     - { role: apt, tags: apt }
     - { role: proxmox, tags: proxmox }
     - { role: ssh, tags: ssh }
+    - { role: monitoring, tags: monitoring }
   handlers:
     - name: Restart keepalived
       ansible.builtin.service:
