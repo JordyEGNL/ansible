@@ -21,6 +21,7 @@
     mode: "0644"
 
 - name: Install Zabbix repository package
+  become: true
   ansible.builtin.apt:
     deb: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
 
