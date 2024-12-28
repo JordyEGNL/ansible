@@ -15,18 +15,33 @@
         path: /etc/zabbix/zabbix_agentd.conf
         state: absent
 
-- name: Download Zabbix repository
-  when: inventory_hostname != "lab-mon-01"
-  ansible.builtin.get_url:
-    url: "{{ zabbix_agent_ubuntu_2404_url }}"
-    dest: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
-    mode: "0644"
-
-- name: Install Zabbix repository package
+- name: Download repository package for Ubuntu
   become: true
-  when: inventory_hostname != "lab-mon-01"
-  ansible.builtin.apt:
-    deb: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
+  when: ansible_distribution == "Ubuntu" and inventory_hostname != "lab-mon-01"
+  block:
+    - name: Download Zabbix repository for Ubuntu
+      ansible.builtin.get_url:
+        url: "{{ zabbix_agent_ubuntu_2404_url }}"
+        dest: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
+        mode: "0644"
+
+    - name: Install Zabbix repository package for Ubuntu
+      ansible.builtin.apt:
+        deb: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
+
+- name: Download repository package for Debian
+  become: true
+  when: ansible_distribution == "Debian" and inventory_hostname != "lab-mon-01"
+  block:
+    - name: Download Zabbix repository for Debian
+      ansible.builtin.get_url:
+        url: "{{ zabbix_agent_debian_12_url }}"
+        dest: "/tmp/{{ zabbix_agent_debian_12_file }}"
+        mode: "0644"
+
+    - name: Install Zabbix repository package for Debian
+      ansible.builtin.apt:
+        deb: "/tmp/{{ zabbix_agent_debian_12_file }}"
 
 - name: Install Zabbix Agent 2 package
   become: true

@@ -2,3 +2,6 @@ zabbix_server_ip: 10.0.10.110
 
 zabbix_agent_ubuntu_2404_url: https://repo.zabbix.com/zabbix/7.2/release/ubuntu/pool/main/z/zabbix-release/zabbix-release_latest_7.2+ubuntu24.04_all.deb
 zabbix_agent_ubuntu_2404_file: zabbix-release_latest_7.2+ubuntu24.04_all.deb
+
+zabbix_agent_debian_12_url: https://repo.zabbix.com/zabbix/7.2/release/debian/pool/main/z/zabbix-release/zabbix-release_latest_7.2+debian12_all.deb
+zabbix_agent_debian_12_file: zabbix-release_latest_7.2+debian12_all.deb
