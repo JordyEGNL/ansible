@@ -3,6 +3,7 @@
 
 - name: Remove old Agent
   become: true
+  when: inventory_hostname != "lab-mon-01"
   block:
     - name: Remove old Zabbix repository package
       ansible.builtin.apt:
@@ -15,6 +16,7 @@
         state: absent
 
 - name: Download Zabbix repository
+  when: inventory_hostname != "lab-mon-01"
   ansible.builtin.get_url:
     url: "{{ zabbix_agent_ubuntu_2404_url }}"
     dest: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
@@ -22,11 +24,13 @@
 
 - name: Install Zabbix repository package
   become: true
+  when: inventory_hostname != "lab-mon-01"
   ansible.builtin.apt:
     deb: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
 
 - name: Install Zabbix Agent 2 package
   become: true
+  when: inventory_hostname != "lab-mon-01"
   ansible.builtin.apt:
     update_cache: true
     name:
@@ -35,6 +39,7 @@
 
 - name: Update Zabbix Agent 2 configuration
   become: true
+  when: inventory_hostname != "lab-mon-01"
   ansible.builtin.lineinfile:
     path: /etc/zabbix/zabbix_agent2.conf
     regexp: "^{{ item.key }}=.*"
@@ -46,6 +51,7 @@
 
 - name: Restart Zabbix Agent 2 service
   become: true
+  when: inventory_hostname != "lab-mon-01"
   ansible.builtin.service:
     name: zabbix-agent2
     state: restarted
