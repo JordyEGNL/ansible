@@ -1,1 +1,1 @@
-checkmk_docker: "disabled"
+monitoring_docker: "disabled"

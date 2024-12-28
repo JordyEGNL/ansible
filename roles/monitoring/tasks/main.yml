@@ -1,46 +1,51 @@
-- name: Include checkmk variables
-  ansible.builtin.include_vars:
-    file: vars/checkmk.yml
+- name: Retrieve variables
+  ansible.builtin.include_vars: vars/zabbix.yml
 
-- name: Include CheckMK agent role
-  ansible.builtin.include_role:
-    name: checkmk.general.agent
-
-- name: Install docker package with pip3
+- name: Remove old Agent
   become: true
-  ansible.builtin.pip:
-    name: docker
-    executable: pip3
-    break_system_packages: true
-  when: checkmk_docker != "disabled"
+  block:
+    - name: Remove old Zabbix repository package
+      ansible.builtin.apt:
+        name: zabbix-agent
+        state: absent
 
-- name: Add docker_mk.py to CheckMK plugins
-  become: true
+    - name: Remove old Zabbix Agent configuration
+      ansible.builtin.file:
+        path: /etc/zabbix/zabbix_agentd.conf
+        state: absent
+
+- name: Download Zabbix repository
   ansible.builtin.get_url:
-    url: "{{ checkmk_agent_server_protocol }}://{{ checkmk_agent_server }}/{{ checkmk_agent_site }}/check_mk/agents/plugins/mk_docker.py"
-    dest: /usr/lib/check_mk_agent/plugins/mk_docker.py
-    mode: '0754'
-    owner: root
-    group: root
-    force: true
-  when: checkmk_docker != "disabled"
+    url: "{{ zabbix_agent_ubuntu_2404_url }}"
+    dest: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
+    mode: "0644"
 
-- name: Configure Docker monitoring
+- name: Install Zabbix repository package
+  ansible.builtin.apt:
+    deb: "/tmp/{{ zabbix_agent_ubuntu_2404_file }}"
+
+- name: Install Zabbix Agent 2 package
   become: true
-  ansible.builtin.get_url:
-    url: "{{ checkmk_agent_server_protocol }}://{{ checkmk_agent_server }}/{{ checkmk_agent_site }}/check_mk/agents/cfg_examples/docker.cfg"
-    dest: /etc/check_mk/docker.cfg
-    mode: '0644'
-    owner: root
-    group: root
-    force: true
-  when: checkmk_docker != "disabled"
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - zabbix-agent2
+    state: present
 
-- name: Disable unused sections
+- name: Update Zabbix Agent 2 configuration
   become: true
   ansible.builtin.lineinfile:
-    path: /etc/check_mk/docker.cfg
-    regexp: '^skip_sections:.*'
-    line: 'skip_sections: docker_container_diskstat'
-    state: present
-  when: checkmk_docker != "disabled"
+    path: /etc/zabbix/zabbix_agent2.conf
+    regexp: "^{{ item.key }}=.*"
+    line: "{{ item.key }}={{ item.value }}"
+  loop:
+    - { key: "Server", value: "{{ zabbix_server_ip }}" }
+    - { key: "ServerActive", value: "{{ zabbix_server_ip }}" }
+    - { key: "Hostname", value: "{{ ansible_hostname }}" }
+
+- name: Restart Zabbix Agent 2 service
+  become: true
+  ansible.builtin.service:
+    name: zabbix-agent2
+    state: restarted
+    enabled: true
