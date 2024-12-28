@@ -20,6 +20,7 @@ virtualmachines:
     lab-mon-01:
       ansible_host: 10.0.10.110
       ansible_user: root
+      zabbix_server_ip: 127.0.0.1
   vars:
     ansible_user: jordy
 
