@@ -1,11 +1,22 @@
 - name: VPS setup
   hosts:
-    - virtualmachines
+    - vps
   roles:
     - { role: basics, tags: basics }
     - { role: ssh, tags: ssh }
     - { role: apt, tags: apt }
     - { role: shell, tags: shell }
     - { role: docker, tags: docker }
+    - { role: motd, tags: motd }
+    - { role: monitoring, tags: monitoring }
+
+- name: LXC setup
+  hosts:
+    - lxc
+  roles:
+    - { role: basics, tags: basics }
+    - { role: ssh, tags: ssh }
+    - { role: apt, tags: apt }
+    - { role: shell, tags: shell }
     - { role: motd, tags: motd }
     - { role: monitoring, tags: monitoring }

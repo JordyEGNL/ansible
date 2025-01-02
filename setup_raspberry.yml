@@ -7,3 +7,4 @@
     - { role: apt, tags: apt }
     - { role: shell, tags: shell }
     - { role: motd, tags: motd }
+    - { role: monitoring, tags: monitoring }

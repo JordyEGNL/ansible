@@ -7,7 +7,7 @@ hypervisors:
   vars:
     ansible_user: root
 
-virtualmachines:
+vps:
   hosts:
     lab-vps-01:
       ansible_host: 10.0.10.101
@@ -17,11 +17,17 @@ virtualmachines:
       ansible_host: 10.0.10.103
     str-vps-01:
       ansible_host: 172.16.2.2
-    lab-mon-01:
-      ansible_host: 10.0.10.110
-      ansible_user: root
   vars:
     ansible_user: jordy
+
+lxc:
+  hosts:
+    lab-dns-02:
+    lab-mon-01:
+    lab-proxy-01:
+      ansible_host: 10.0.20.201
+  vars:
+    ansible_user: root
 
 raspberry:
   hosts:

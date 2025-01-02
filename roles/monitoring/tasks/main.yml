@@ -64,6 +64,14 @@
     - { key: "ServerActive", value: "{{ zabbix_server_ip }}" }
     - { key: "Hostname", value: "{{ ansible_hostname }}" }
 
+- name: Add zabbix user to the docker group
+  become: true
+  when: monitoring_docker == true and inventory_hostname != "lab-mon-01"
+  ansible.builtin.user:
+    name: zabbix
+    groups: docker
+    append: true
+
 - name: Restart Zabbix Agent 2 service
   become: true
   when: inventory_hostname != "lab-mon-01"

@@ -1,1 +1,1 @@
-monitoring_docker: "disabled"
+monitoring_docker: false

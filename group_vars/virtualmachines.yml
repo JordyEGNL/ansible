@@ -1,5 +1,0 @@
-#
-# CheckMK Variables
-#
-
-checkmk_docker: "enabled"

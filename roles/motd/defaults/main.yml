@@ -1,1 +1,1 @@
-motd_docker: "enabled"
+motd_docker: true
