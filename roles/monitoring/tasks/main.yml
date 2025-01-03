@@ -17,7 +17,7 @@
 
 - name: Download repository package for Ubuntu
   become: true
-  when: ansible_distribution == "Ubuntu" and inventory_hostname != "lab-mon-01"
+  when: ansible_distribution == "Ubuntu" and inventory_hostname != "lab-mon-01" and ansible_distribution_version == "24.04"
   block:
     - name: Download Zabbix repository for Ubuntu
       ansible.builtin.get_url:
@@ -31,7 +31,7 @@
 
 - name: Download repository package for Debian
   become: true
-  when: ansible_distribution == "Debian" and inventory_hostname != "lab-mon-01"
+  when: ansible_distribution == "Debian" and inventory_hostname != "lab-mon-01" and ansible_distribution_version == "12"
   block:
     - name: Download Zabbix repository for Debian
       ansible.builtin.get_url:
@@ -79,3 +79,13 @@
     name: zabbix-agent2
     state: restarted
     enabled: true
+
+- name: Allow port 10050 on UFW
+  become: true
+  when: inventory_hostname != "lab-mon-01"
+  ansible.builtin.ufw:
+    rule: allow
+    port: 10050
+    proto: tcp
+    from: "{{ zabbix_server_ip }}"
+    comment: "Allow the Zabbix server to connect to the Zabbix agent"
