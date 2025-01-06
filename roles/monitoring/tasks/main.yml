@@ -1,7 +1,21 @@
 - name: Retrieve variables
   ansible.builtin.include_vars: vars/zabbix.yml
 
-- name: Remove old Agent
+- name: Remove old CheckMK Agent
+  become: true
+  when: inventory_hostname != "lab-mon-01"
+  block:
+    - name: Remove old CheckMK Agent package
+      ansible.builtin.apt:
+        name: check-mk-agent
+        state: absent
+
+    - name: Remove old CheckMK Agent configuration
+      ansible.builtin.file:
+        path: /etc/check_mk
+        state: absent
+
+- name: Remove old Zabbix Agent
   become: true
   when: inventory_hostname != "lab-mon-01"
   block:
