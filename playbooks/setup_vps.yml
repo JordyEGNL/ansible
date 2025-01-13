@@ -1,3 +1,5 @@
+# Setup Virtual Machines: SSH, Shell, Docker, Monitoring etc..
+# Usage: ansible-playbook ./playbooks/setup_vps.yml -J
 - name: VPS setup
   hosts:
     - vps
