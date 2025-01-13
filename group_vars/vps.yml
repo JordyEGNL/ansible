@@ -1,5 +1,1 @@
-#
-# CheckMK Variables
-#
-
 monitoring_docker: true
