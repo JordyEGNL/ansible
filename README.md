@@ -3,7 +3,6 @@ Ansible playbooks and config for homelab automation
 
 ## Versions
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html): ~> 2.17
-- [checkmk.general](https://galaxy.ansible.com/ui/repo/published/checkmk/general/): ~> 5.2.1
 - [netaddr](https://netaddr.readthedocs.io/en/latest/installation.html): ~> 1.3.0
 
 ## Common commands
