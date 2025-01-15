@@ -66,4 +66,4 @@
   ansible.builtin.file:
     path: /etc/update-motd.d/60-docker
     state: absent
-  when: !motd_docker
+  when: not motd_docker
