@@ -80,7 +80,7 @@
 
 - name: Add zabbix user to the docker group
   become: true
-  when: monitoring_docker == true and inventory_hostname != "lab-mon-01"
+  when: monitoring_docker and inventory_hostname != "lab-mon-01"
   ansible.builtin.user:
     name: zabbix
     groups: docker
@@ -97,7 +97,7 @@
 - name: Allow port 10050 on UFW
   become: true
   when: inventory_hostname != "lab-mon-01"
-  ansible.builtin.ufw:
+  community.general.ufw:
     rule: allow
     port: 10050
     proto: tcp

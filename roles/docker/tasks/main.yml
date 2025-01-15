@@ -119,9 +119,9 @@
 - name: Install docker packages
   become: true
   ansible.builtin.apt:
-      name: "{{ item }}"
-      state: present
-      update_cache: true
+    name: "{{ item }}"
+    state: present
+    update_cache: true
   with_items:
     - docker-ce
     - docker-ce-cli
