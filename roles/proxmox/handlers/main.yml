@@ -1,0 +1,8 @@
+- name: Restart keepalived
+  ansible.builtin.service:
+    name: keepalived
+    state: restarted
+- name: Restart glances
+  ansible.builtin.service:
+    name: glances
+    state: restarted
