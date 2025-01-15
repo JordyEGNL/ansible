@@ -69,6 +69,7 @@
 - name: Update Zabbix Agent 2 configuration
   become: true
   when: inventory_hostname != "lab-mon-01"
+  notify: Restart Zabbix Agent 2 service
   ansible.builtin.lineinfile:
     path: /etc/zabbix/zabbix_agent2.conf
     regexp: "^{{ item.key }}=.*"
@@ -85,14 +86,6 @@
     name: zabbix
     groups: docker
     append: true
-
-- name: Restart Zabbix Agent 2 service
-  become: true
-  when: inventory_hostname != "lab-mon-01"
-  ansible.builtin.service:
-    name: zabbix-agent2
-    state: restarted
-    enabled: true
 
 - name: Allow port 10050 on UFW
   become: true
