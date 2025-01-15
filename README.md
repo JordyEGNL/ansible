@@ -9,7 +9,7 @@ Ansible playbooks and config for homelab automation
 
 ### Run a playbook
 ```bash
-ansible-playbook setup_vps.yml -i inventory/default.yml -K -J --limit "str-vps-01"
+ansible-playbook playbooks/setup_vps.yml -i inventory/default.yml -K -J --limit "str-vps-01"
 ```
 
 ### Switches explained
