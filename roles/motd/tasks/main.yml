@@ -51,6 +51,7 @@
   ansible.builtin.file:
     path: /etc/update-motd.d/
     state: directory
+    mode: '0755'
 
 - name: Copy motd files
   become: true
