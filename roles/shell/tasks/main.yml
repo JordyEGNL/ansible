@@ -15,26 +15,18 @@
     name: 'zsh'
     state: present
 
-- name: Check if Oh My Zsh is installed (1/2)
-  become_user: "{{ ansible_user }}"
-  ansible.builtin.stat:
-    path: ~/.oh-my-zsh
-  register: ohmyzsh_installed
-
 - name: SHELL - Install Oh My Zsh
+  become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-  when: ohmyzsh_installed.stat.exists == False
-
-- name: Check if Oh My Zsh is installed (2/2)
-  become_user: "{{ ansible_user }}"
-  ansible.builtin.stat:
-    path: ~/.oh-my-zsh
   register: ohmyzsh_installed
+  args:
+    creates: ~/.oh-my-zsh
 
 - name: Set ZSH_THEME in .zshrc
+  become: true
   become_user: "{{ ansible_user }}"
-  when: ohmyzsh_installed.stat.exists == True
+  when: ohmyzsh_installed.rc == 0
   ansible.builtin.lineinfile:
     path: ~/.zshrc
     regexp: '^ZSH_THEME='
@@ -43,7 +35,7 @@
 
 - name: Set Zsh as default shell for user
   become: true
-  when: ohmyzsh_installed.stat.exists == True
+  when: ohmyzsh_installed.rc == 0
   ansible.builtin.command: usermod --shell /bin/zsh "{{ ansible_user }}"
   changed_when: false
 
@@ -54,34 +46,27 @@
     name: 'fzf'
     state: present
 
-- name: Check if Zoxide is installed (1/2)
-  become_user: "{{ ansible_user }}"
-  ansible.builtin.stat:
-    path: ~/.local/bin/zoxide
-  register: zoxide_check
-
 - name: SHELL - Install Zoxide for Zsh
+  become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/master/install.sh)"
-  when: zoxide_check.stat.exists == False
-
-- name: Check if Zoxide is installed (2/2)
-  become_user: "{{ ansible_user }}"
-  ansible.builtin.stat:
-    path: ~/.local/bin/zoxide
   register: zoxide_check
+  args:
+    creates: ~/.local/bin/zoxide
 
 - name: Add ~/.local/bin to PATH
+  become: true
   become_user: "{{ ansible_user }}"
-  when: zoxide_check.stat.exists == True
+  when: zoxide_check.rc == 0
   ansible.builtin.lineinfile:
     path: ~/.zshrc
     line: 'export PATH="$HOME/.local/bin:$PATH"'
     state: present
 
 - name: Add Zoxide to .zshrc
+  become: true
   become_user: "{{ ansible_user }}"
-  when: zoxide_check.stat.exists == True
+  when: zoxide_check.rc == 0
   ansible.builtin.lineinfile:
     path: ~/.zshrc
     line: 'eval "$(zoxide init zsh)"'
