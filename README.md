@@ -1,6 +1,11 @@
 # ansible-playbooks
 Ansible playbooks and config for homelab automation
 
+## Index
+- [Versions](#versions)
+- [Common commands](#common-commands)
+- [Setup instructions (Ubuntu)](#setup-instructions)
+
 ## Versions
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html): ~> 2.17
 - [netaddr](https://netaddr.readthedocs.io/en/latest/installation.html): ~> 1.3.0
@@ -34,4 +39,16 @@ ansible -m ping all -i inventory/default.yml
 ### Encrypt a variable 
 ```bash
 ansible-vault encrypt_string --name <variable>
+```
+
+## Setup instructions
+
+```bash
+sudo apt update
+sudo apt install software-properties-common -y
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install ansible python3 python3-pip -y
+sudo apt install python3-requests python3-passlib -y
+
+pip3 install ansible-dev-tools
 ```
