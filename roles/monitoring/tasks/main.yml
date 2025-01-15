@@ -1,5 +1,5 @@
 - name: Retrieve variables
-  ansible.builtin.include_vars: vars/zabbix.yml
+  ansible.builtin.include_vars: ../vars/zabbix.yml
 
 - name: Remove old CheckMK Agent
   become: true

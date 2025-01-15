@@ -1,5 +1,5 @@
 # Setup Proxmox hypervisors: SSH, HA, Keepalived and Cloudflared
-# Usage: ansible-playbook setup_hypervisors.yml -J
+# Usage: ansible-playbook ./playbooks/setup_hypervisors.yml -J
 - name: Proxmox setup
   hosts:
     - hypervisors

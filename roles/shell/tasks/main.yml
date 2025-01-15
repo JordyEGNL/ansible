@@ -86,3 +86,16 @@
     path: ~/.zshrc
     line: 'eval "$(zoxide init zsh)"'
     state: present
+
+# Fix `zsh | (anon):12: character not in range` issue with zsh
+# https://gist.github.com/jadia/1f4c2190730ef646d41823b6a6c30926
+- name: Add correct language pack
+  become: true
+  ansible.builtin.package:
+    name: 'language-pack-en'
+    state: present
+
+- name: Update locale
+  become: true
+  ansible.builtin.command: update-locale
+  changed_when: false

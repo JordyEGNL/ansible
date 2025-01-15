@@ -22,10 +22,10 @@ vps:
 
 lxc:
   hosts:
-    lab-dns-02:
+    lab-dns-01:
     lab-mon-01:
     lab-proxy-01:
-      ansible_host: 10.0.20.201
+    lab-aut-01:
   vars:
     ansible_user: root
 

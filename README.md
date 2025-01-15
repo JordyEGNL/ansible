@@ -3,14 +3,13 @@ Ansible playbooks and config for homelab automation
 
 ## Versions
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html): ~> 2.17
-- [checkmk.general](https://galaxy.ansible.com/ui/repo/published/checkmk/general/): ~> 5.2.1
 - [netaddr](https://netaddr.readthedocs.io/en/latest/installation.html): ~> 1.3.0
 
 ## Common commands
 
 ### Run a playbook
 ```bash
-ansible-playbook setup_vps.yml -i inventory/default.yml -K -J --limit "str-vps-01"
+ansible-playbook playbooks/setup_vps.yml -i inventory/default.yml -K -J --limit "str-vps-01"
 ```
 
 ### Switches explained
