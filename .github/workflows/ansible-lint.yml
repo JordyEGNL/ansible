@@ -1,7 +1,11 @@
 name: ansible-lint
 on:
   pull_request:
-    branches: ["main", "lint-action"]
+    branches:
+      - main
+  push:
+    branches:
+      - main
 jobs:
   build:
     name: Ansible Lint
