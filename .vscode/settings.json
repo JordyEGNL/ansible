@@ -3,6 +3,7 @@
     "ansible.python.interpreterPath": "/usr/bin/python3",
     "files.associations": {
         "**/tasks/*.yml": "ansible",
+        "**/handlers/*.yml": "ansible",
         "*.yml": "yaml",
         "*.yaml.j2": "yaml",
         "**/group_vars/*.yml": "ansible",
