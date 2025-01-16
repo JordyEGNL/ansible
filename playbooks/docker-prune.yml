@@ -3,7 +3,7 @@
 
   tasks:
     - name: Prune Docker
-      community.general.docker_prune:
+      community.docker.docker_prune:
         builder_cache: true
         images: true
         images_filters:
