@@ -22,4 +22,4 @@
 
     - name: Show total reclaimed space per host
       ansible.builtin.debug:
-        msg:  "Host {{ inventory_hostname }}: {{ total_reclaimed_space }} MB reclaimed"
+        msg: "Host {{ inventory_hostname }}: {{ total_reclaimed_space }} MB reclaimed"
