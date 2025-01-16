@@ -17,6 +17,8 @@ vps:
       ansible_host: 10.0.10.103
     str-vps-01:
       ansible_host: 172.16.2.2
+    orc-vps-01:
+      ansible_host: 172.16.2.3
   vars:
     ansible_user: jordy
 
