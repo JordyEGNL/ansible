@@ -1,6 +1,7 @@
 exclude_paths:
   - .cache/
   - .github/
+  - .config/
   - .vscode/
   - .git
   - .gitignore
