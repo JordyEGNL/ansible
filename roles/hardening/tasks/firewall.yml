@@ -1,6 +1,6 @@
 - name: Only allow 443 and 80 on the firewall
   become: true
-  ufw:
+  community.general.ufw:
     rule: allow
     port: "{{ item }}"
     proto: tcp
