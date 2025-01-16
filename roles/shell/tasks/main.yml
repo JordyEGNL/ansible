@@ -74,8 +74,12 @@
 
 # Fix `zsh | (anon):12: character not in range` issue with zsh
 # https://gist.github.com/jadia/1f4c2190730ef646d41823b6a6c30926
+#
+# Also issues with btop on some LXCs
+# "ERROR: No UTF-8 locale detected!"
 - name: Add correct language pack
   become: true
+  when: ansible_distribution == 'Ubuntu'
   ansible.builtin.package:
     name: 'language-pack-en'
     state: present
@@ -83,4 +87,28 @@
 - name: Update locale
   become: true
   ansible.builtin.command: update-locale
+  changed_when: false
+
+- name: Set locale to en_US.UTF-8
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/default/locale
+    regexp: '^LANG='
+    line: 'LANG=en_US.UTF-8'
+    state: present
+  with_items:
+    - /etc/default/locale
+    - /etc/locale.conf
+
+- name: Enable en_US.UTF-8 UTF-8 locale
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/locale.gen
+    regexp: '^# en_US.UTF-8 UTF-8'
+    line: 'en_US.UTF-8 UTF-8'
+    state: present
+
+- name: Generate locale
+  become: true
+  ansible.builtin.command: locale-gen
   changed_when: false
