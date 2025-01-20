@@ -22,3 +22,14 @@
     - python3
     - btop
     - ufw
+
+- name: Enable passwordless sudo for {{ ansible_user }}
+  when: ansible_user != 'root'
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/{{ ansible_user }}
+    line: "{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL"
+    state: present
+    create: true
+    validate: 'visudo -cf %s'
+    mode: '0640'

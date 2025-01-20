@@ -26,7 +26,6 @@ lxc:
   hosts:
     lab-dns-01:
     lab-mon-01:
-    lab-proxy-01:
     lab-aut-01:
   vars:
     ansible_user: root
