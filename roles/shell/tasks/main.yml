@@ -1,5 +1,5 @@
 # Dependencies
-- name: Install dependencies for Zsh
+- name: Install dependencies
   become: true
   ansible.builtin.package:
     name:
@@ -112,3 +112,22 @@
   become: true
   ansible.builtin.command: locale-gen
   changed_when: false
+
+- name: Install tailspin on Ubuntu
+  become: true
+  when: ansible_distribution == 'Ubuntu'
+  ansible.builtin.apt:
+    name: 'tailspin'
+    state: present
+
+- name: Add aliases to .zshrc
+  become: true
+  become_user: "{{ ansible_user }}"
+  when: ansible_distribution == 'Ubuntu'
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    line: "{{ item }}"
+    state: present
+  with_items:
+    - 'alias tspin="tailspin"'
+    - 'alias cat="tailspin -p"'
