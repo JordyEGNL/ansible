@@ -45,7 +45,7 @@
 
 - name: Download repository package for Debian
   become: true
-  when: ansible_distribution == "Debian" and inventory_hostname != "lab-mon-01" and ansible_distribution_version == "12"
+  when: ansible_distribution == "Debian" and inventory_hostname != "lab-mon-01" and ansible_distribution_version >= "12" and ansible_distribution_version < "13"
   block:
     - name: Download Zabbix repository for Debian
       ansible.builtin.get_url:
@@ -79,17 +79,33 @@
     - { key: "ServerActive", value: "{{ zabbix_server_ip }}" }
     - { key: "Hostname", value: "{{ ansible_hostname }}" }
 
+# TODO: Dont create errors, make the check better
+- name: Check if Docker is installed
+  ansible.builtin.command:
+    cmd: docker --version
+  register: docker_installed
+  ignore_errors: true
+  changed_when: false
+
 - name: Add zabbix user to the docker group
   become: true
-  when: monitoring_docker and inventory_hostname != "lab-mon-01"
+  when: monitoring_docker and inventory_hostname != "lab-mon-01" and docker_installed.rc == 0
   ansible.builtin.user:
     name: zabbix
     groups: docker
     append: true
 
+# TODO: Dont create errors, make the check better
+- name: Check if UFW is installed
+  ansible.builtin.command:
+    cmd: ufw status
+  register: ufw_status
+  ignore_errors: true
+  changed_when: false
+
 - name: Allow port 10050 on UFW
   become: true
-  when: inventory_hostname != "lab-mon-01"
+  when: inventory_hostname != "lab-mon-01" and ufw_status.rc == 0
   community.general.ufw:
     rule: allow
     port: 10050

@@ -29,6 +29,7 @@
     - virtualenv
     - python3-setuptools
 
+# TODO: Dont create errors, make the check better
 - name: Check if Docker is installed
   ansible.builtin.command:
     cmd: docker --version
