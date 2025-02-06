@@ -1,8 +1,11 @@
 - name: Keepalived setup
+  tags: keepalived
   ansible.builtin.import_tasks: keepalived.yml
 
 - name: Glances setup
+  tags: glances
   ansible.builtin.import_tasks: glances.yml
 
 - name: Cloudflared setup
+  tags: cloudflared
   ansible.builtin.import_tasks: cloudflared.yml
