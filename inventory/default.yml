@@ -15,9 +15,9 @@ vps:
       ansible_host: 10.0.10.102
     lab-vps-03:
       ansible_host: 10.0.10.103
-    lab-pbs-01:
-      ansible_user: root
-      ansible_host: 10.0.10.150
+#    lab-pbs-01:
+#      ansible_user: root
+#      ansible_host: 10.0.10.150
     str-vps-01:
       ansible_host: 172.16.2.2
     orc-vps-01:
