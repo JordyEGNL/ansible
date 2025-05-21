@@ -97,6 +97,7 @@
 
 # TODO: Dont create errors, make the check better
 - name: Check if UFW is installed
+  become: true
   ansible.builtin.command:
     cmd: ufw status
   register: ufw_status
